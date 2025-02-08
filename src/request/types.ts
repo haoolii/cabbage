@@ -4,33 +4,37 @@ export type ApiResponse<T> = {
   code: string;
 };
 
-export type GetRecordApiResponse = ApiResponse<{
-  record: {
-    uniqueId: string;
-    type: string;
-    prompt: string;
-    passwordRequired: boolean;
-    createdAt: string;
-    assets?: Array<{
-        filename: string;
-      }>;
-  };
-  token: string;
+export type PostAssetUploadResponse = ApiResponse<{
+  assets: string[];
 }>;
 
-export type PostRecordApiResponse = ApiResponse<{
-    record: {
-        uniqueId: string;
-        type: string;
-        prompt: string;
-        passwordRequired: boolean;
-        createdAt: string;
-        urls: Array<string>;
-        assets: Array<{
-          filename: string;
-        }>;
-    },
-    token: string;
+export type PostRecordImageResponse = ApiResponse<{
+  uniqueId: string;
+}>;
+
+export type PostRecordUrlResponse = ApiResponse<{
+  uniqueId: string;
+}>;
+
+export type Record = {
+  uniqueId: string;
+  type: string;
+  prompt: string;
+  passwordRequired: boolean;
+  createdAt: string;
+  assets?: Array<{
+    filename: string;
+  }>;
+  urls?: Array<{
+    content: string,
+  }>
+};
+
+export type GetRecordApiResponse = ApiResponse<{
+  record: Record;
+  token: string;
+  tokenVerified: boolean;
+  fullInfo: boolean;
 }>;
 
 export type PostImageRecordBody = {
@@ -49,6 +53,10 @@ export type PostMediaRecordBody = {
   assetIds: string[];
 };
 
-export type PostGetRecordDetailBody = {
+export type PostRecordPasswordBody = {
   password: string;
 };
+
+export type PostRecordPasswordApiResponse = ApiResponse<{
+  token: string;
+}>;

@@ -9,7 +9,7 @@ const paths = {
   postRecordImage: "/record/image",
   postRecordMedia: "/record/media",
   getQueryRecord: "/record/:uniqueId",
-  postGetQueryRecord: "/record/:uniqueId",
+  postRecordPassword: "/record/:uniqueId/password",
 };
 
 export const api = createApi(paths, base);

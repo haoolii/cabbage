@@ -1,6 +1,8 @@
-import { PasswordInput } from "@/components/passwordInput";
+import { ImagePreivew } from "@/components/ImagePreview";
+import { PasswordResolve } from "@/components/resolve/passwordResolve";
 import { getRecordDetail } from "@/request/requests";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function UniqueId({
   params,
@@ -9,32 +11,47 @@ export default async function UniqueId({
 }) {
   const { uniqueId } = await params;
 
-  // const cookieStore = await cookies();
+  const cookie = await cookies();
 
-  const getRecordDetailJson = await getRecordDetail(uniqueId);
+  const getRecordDetailJson = await getRecordDetail(
+    uniqueId,
+    cookie.get("Authorization")?.value
+  );
 
-  // cookieStore.set("Authorization", getRecordDetailJson.data.token);
-
-  if (getRecordDetailJson.data.record.passwordRequired) {
-    return (
-      <div>
-        <PasswordInput uniqueId={uniqueId} />
-        <img src="http://localhost:3000/o/eaaf9a9b-9d03-4cf9-b276-f61283167ee3.png" />
-      </div>
-    );
+  if (getRecordDetailJson.data.record.type === "url") {
+    const urls = getRecordDetailJson.data.record.urls;
+    if (urls?.length) {
+      redirect(urls[0].content);
+    }
   }
 
-  // TODO:
+  console.log('Hello')
+
+  // 並非 private 且需要密碼
+  if (
+    !getRecordDetailJson.data.tokenVerified &&
+    getRecordDetailJson.data.record.passwordRequired
+  ) {
+    return (
+      <PasswordResolve
+        uniqueId={uniqueId}
+        record={getRecordDetailJson.data.record}
+      />
+    );
+  }
 
   return (
     <>
       <h1>UniqueId: {uniqueId}</h1>
+      <pre>{JSON.stringify(getRecordDetailJson, null, 2)}</pre>
       <div>
         {(getRecordDetailJson?.data?.record?.assets || []).map((asset) => {
           return (
-            <div key={asset.filename}>
-              <img src={`http://localhost:3000/o/${asset.filename}`} />
-            </div>
+            <ImagePreivew
+              key={asset.filename}
+              filename={asset.filename}
+              token={getRecordDetailJson.data.token}
+            />
           );
         })}
       </div>

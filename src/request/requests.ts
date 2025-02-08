@@ -1,24 +1,30 @@
 import { api } from "./endpoint";
 import {
   GetRecordApiResponse,
-  PostGetRecordDetailBody,
+  PostAssetUploadResponse,
   PostImageRecordBody,
   PostMediaRecordBody,
-  PostRecordApiResponse,
+  PostRecordImageResponse,
+  PostRecordPasswordApiResponse,
+  PostRecordPasswordBody,
+  PostRecordUrlResponse,
 } from "./types";
 import { replacePathParams } from "./util";
 
-export const postAssetUpload = async (file: File) => {
+export const postAssetUpload = async (files: File[]) => {
   const formData = new FormData();
 
-  formData.append("file", file);
+  files.forEach((file, index) => {
+    formData.append("files", file);
+  });
 
   const response = await fetch(api.postAssetUpload, {
     method: "POST",
     body: formData,
   });
+  const json = (await response.json()) as PostAssetUploadResponse;
 
-  return response;
+  return json;
 };
 
 export const postRecordUrl = async (content: string) => {
@@ -35,7 +41,9 @@ export const postRecordUrl = async (content: string) => {
     }),
   });
 
-  return response;
+  const json = await response.json() as PostRecordUrlResponse;
+
+  return json;
 };
 
 export const postRecordImage = async (body: PostImageRecordBody) => {
@@ -49,7 +57,9 @@ export const postRecordImage = async (body: PostImageRecordBody) => {
     body: JSON.stringify(body),
   });
 
-  return response;
+  const json = (await response.json()) as PostRecordImageResponse;
+
+  return json;
 };
 
 export const postRecordMedia = async (body: PostMediaRecordBody) => {
@@ -68,11 +78,16 @@ export const postRecordMedia = async (body: PostMediaRecordBody) => {
   return json;
 };
 
-export const getRecordDetail = async (uniqueId: string) => {
+export const getRecordDetail = async (uniqueId: string, token?: string) => {
   const url = replacePathParams(api.getQueryRecord, { uniqueId });
 
   const response = await fetch(url, {
     method: "GET",
+    headers: token
+      ? {
+          Authorization: `Bearer ${token}`,
+        }
+      : {},
   });
 
   const json = (await response.json()) as GetRecordApiResponse;
@@ -80,21 +95,21 @@ export const getRecordDetail = async (uniqueId: string) => {
   return json;
 };
 
-export const postGetRecordDetail = async (
+export const postRecordPassword = async (
   uniqueId: string,
-  body: PostGetRecordDetailBody
+  body: PostRecordPasswordBody
 ) => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 
-  const url = replacePathParams(api.postGetQueryRecord, { uniqueId });
+  const url = replacePathParams(api.postRecordPassword, { uniqueId });
 
   const response = await fetch(url, {
     method: "POST",
     headers,
     body: JSON.stringify(body),
   });
-  const json = (await response.json()) as PostRecordApiResponse;
+  const json = (await response.json()) as PostRecordPasswordApiResponse;
 
   return json;
 };
