@@ -1,5 +1,8 @@
+import {useTranslations} from 'next-intl';
 
-export default async function Home() {
-  return <div>
-  </div>;
+export default function Home() {
+
+  const t = useTranslations('HomePage');
+
+  return <h1>{t('title')}</h1>;
 }
