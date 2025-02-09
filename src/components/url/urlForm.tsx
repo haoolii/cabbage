@@ -38,6 +38,7 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
           name="content"
           children={(field) => (
             <Input
+              placeholder="請輸入網址"
               value={field.state.value}
               className="bg-primary-foreground text-black rounded-2xl max-w-xl"
               onChange={(e) => {

@@ -1,3 +1,4 @@
+import { ImageResolve } from "@/components/image/imageResolve";
 import { ImagePreivew } from "@/components/ImagePreview";
 import { PasswordResolve } from "@/components/resolve/passwordResolve";
 import { getRecordDetail } from "@/request/requests";
@@ -42,19 +43,7 @@ export default async function UniqueId({
 
   return (
     <>
-      <h1>UniqueId: {uniqueId}</h1>
-      <pre>{JSON.stringify(getRecordDetailJson, null, 2)}</pre>
-      <div>
-        {(getRecordDetailJson?.data?.record?.assets || []).map((asset) => {
-          return (
-            <ImagePreivew
-              key={asset.filename}
-              filename={asset.filename}
-              token={getRecordDetailJson.data.token}
-            />
-          );
-        })}
-      </div>
+      <ImageResolve record={getRecordDetailJson?.data?.record} token={getRecordDetailJson.data.token} />
     </>
   );
 }

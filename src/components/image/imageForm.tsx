@@ -14,14 +14,14 @@ import { Button } from "../ui/button";
 import { postAssetUpload, postRecordImage } from "@/request/requests";
 import { useState } from "react";
 import { ImageShow } from "./imageShow";
-import { v4 as  uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 const allowedFileTypes = [".jpg", ".jpeg", ".png", ".gif"];
 
 type FileWrapper = {
-    file: File;
-    id: string;
-}
+  file: File;
+  id: string;
+};
 
 type Props = {
   onSuccess?: (files: File[], uniqueId: string) => void;
@@ -42,12 +42,14 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
       passwordRequired: false,
       password: "",
       prompt: "",
-      expireIn: 0,
+      expireIn: 60,
     },
     onSubmit: async ({ value }) => {
       try {
         setIsLoading(true);
-        const uploadJson = await postAssetUpload(value.files.map(f => f.file));
+        const uploadJson = await postAssetUpload(
+          value.files.map((f) => f.file)
+        );
         const postRecordJson = await postRecordImage({
           assetIds: uploadJson.data.assets,
           prompt: value.prompt,
@@ -55,7 +57,10 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
           password: value.passwordRequired ? value.password : "",
           expireIn: value.expireIn,
         });
-        onSuccess(value.files.map(f => f.file), postRecordJson.data.uniqueId);
+        onSuccess(
+          value.files.map((f) => f.file),
+          postRecordJson.data.uniqueId
+        );
       } catch (err) {
       } finally {
         setIsLoading(false);
@@ -72,10 +77,10 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
 
   const onRemove = (id: string) => {
     form.setFieldValue(
-        "files",
-        files.filter((f) => f.id !== id)
-      );
-  }
+      "files",
+      files.filter((f) => f.id !== id)
+    );
+  };
 
   return (
     <div className="w-full">
@@ -87,19 +92,23 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
           form.handleSubmit();
         }}
       >
-        <div className={`grid ${files.length > 1 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-4 pb-8`}>
+        <div
+          className={`grid ${
+            files.length > 1 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
+          } gap-4 pb-8`}
+        >
           {files.map((file) => (
             <div key={file.id}>
               <ImageShow
                 file={file.file}
                 onRemove={() => {
-                    onRemove(file.id);
+                  onRemove(file.id);
                 }}
               />
             </div>
           ))}
         </div>
-        <div className="w-full max-w-xl flex flex-col gap-6  items-center">
+        <div className="w-full max-w-xl flex flex-col gap-6 items-center">
           <div className="flex flex-col gap-4 w-full">
             <form.Field
               name="files"
@@ -108,7 +117,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                   value.length === 0 ? "Must upload less one file" : undefined,
               }}
               children={(field) => (
-                <label className="mb-4 p-14 bg-foreground/20 w-full rounded-xl flex justify-center border-2 border-dashed border-foreground/50 cursor-pointer hover:opacity-80 transition">
+                <label className="mb-4 h-28 bg-foreground/20 w-full rounded-xl flex flex-col justify-center items-center border-2 border-dashed border-foreground/50 cursor-pointer hover:opacity-80 transition">
                   <span className="font-medium text-base text-primary-foreground/60">
                     上傳圖片、影像
                   </span>
@@ -118,9 +127,9 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                         const files = [...e.target.files];
                         field.handleChange([
                           ...field.state.value,
-                          ...files.map(f => ({
+                          ...files.map((f) => ({
                             file: f,
-                            id: uuid()
+                            id: uuid(),
                           })),
                         ]);
                       }
@@ -130,8 +139,10 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                     accept={allowedFileTypes.join(",")}
                     multiple
                   />
-                  {field.state.meta.errors ? (
-                    <em role="alert">{field.state.meta.errors.join(", ")}</em>
+                  {field.state.meta.errors.length ? (
+                    <em role="alert" className="font-semibold">
+                      * {field.state.meta.errors.join(", ")}
+                    </em>
                   ) : null}
                 </label>
               )}
@@ -159,12 +170,24 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
             {passwordRequired && (
               <form.Field
                 name="password"
+                validators={{
+                  onChange: ({ value }) =>
+                    value.length === 0 ? "Must fill" : undefined,
+                }}
                 children={(field) => (
                   <label className="flex flex-col w-full gap-2">
-                    <span className="font-medium text-sm text-primary-foreground/60">
-                      密碼
-                    </span>
+                    <div className="flex gap-2 items-center">
+                      <span className="font-medium text-sm text-primary-foreground/60">
+                        密碼
+                      </span>
+                      {field.state.meta.errors.length ? (
+                        <em role="alert" className="font-semibold text-sm">
+                          * {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </div>
                     <Input
+                      placeholder={"請輸入密碼"}
                       className="bg-primary-foreground text-black rounded-2xl"
                       name={field.name}
                       value={field.state.value}
@@ -184,23 +207,28 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                   </span>
                   <Select
                     name={field.name}
-                    value={`${field.state.value}`}
+                    value={
+                      field.state.value ? `${field.state.value}` : undefined
+                    }
                     onValueChange={(v) => {
                       field.handleChange(Number(v));
                     }}
                   >
-                    <SelectTrigger className="bg-primary-foreground text-black rounded-2xl">
-                      <SelectValue placeholder="請輸入有效時間" />
+                    <SelectTrigger className="bg-primary-foreground rounded-2xl text-black">
+                      <SelectValue
+                        className="text-black/40"
+                        placeholder="請輸入有效時間"
+                      />
                     </SelectTrigger>
                     <SelectContent className="bg-primary-foreground text-black rounded-2xl">
-                      <SelectItem className="rounded-xl" value="60">
-                        60s
+                      <SelectItem className="rounded-xl" value={"60"}>
+                        1分鐘
                       </SelectItem>
-                      <SelectItem className="rounded-xl" value="120">
-                        120s
+                      <SelectItem className="rounded-xl" value={"300"}>
+                        5分鐘
                       </SelectItem>
-                      <SelectItem className="rounded-xl" value="300">
-                        300s
+                      <SelectItem className="rounded-xl" value={"600"}>
+                        10分鐘
                       </SelectItem>
                     </SelectContent>
                   </Select>
@@ -212,10 +240,11 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
               children={(field) => (
                 <label className="flex flex-col w-full gap-2">
                   <span className="font-medium text-sm text-primary-foreground/60">
-                    說明內容
+                    提示文字
                   </span>
                   <Input
                     className="bg-primary-foreground text-black rounded-2xl"
+                    placeholder="請輸入提示文字"
                     name={field.name}
                     value={field.state.value}
                     onBlur={field.handleBlur}
