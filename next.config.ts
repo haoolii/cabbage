@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/o/:path*",
-        destination: `${process.env.SERVER_API_BASE}/o/:path*`,
+        destination: `${process.env.SERVER_API_BASE}/api/asset/files/:path*`,
       },
     ];
   },

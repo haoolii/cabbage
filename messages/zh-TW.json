@@ -1,0 +1,123 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "Global": {
+    "title": "",
+    "description": "",
+    "1min": "1 分鐘",
+    "5min": "5 分鐘",
+    "30min": "30 分鐘",
+    "1hour": "1 小時",
+    "6hour": "6 小時",
+    "12hour": "12 小時",
+    "3day": "3 天",
+    "7day": "7 天",
+    "10day": "10 天",
+    "30day": "30 天",
+    "Unlimited": "無期限"
+  },
+  "Header": {
+    "links": {
+      "shortenUrlLink": "縮網址",
+      "shortenImageLink": "圖片縮網址",
+      "shortenMediaLink": "影片縮網址",
+      "policyLink": "隱私權政策"
+    },
+    "language": {
+      "english": "English",
+      "chinese": "中文"
+    }
+  },
+  "UrlPage": {
+    "title": "最安全、快速、方便、免費的短網址服務",
+    "form": {
+      "content": {
+        "placeholder": "請輸入網址",
+        "errors": {
+          "required": "請輸入網址"
+        }
+      },
+      "submit": "送出",
+      "submitting": "送出中..."
+    },
+    "successPrompt": "縮網址成功",
+    "continueShortening": "繼續縮網址"
+  },
+  "ImagePage": {
+    "title": "最安全、快速、方便、免費的短網址服務",
+    "subtitle": "上傳圖片、上傳影像",
+    "form": {
+      "files": {
+        "label": "",
+        "placeholder": "上傳圖片、上傳影像",
+        "errors": {
+          "required": "請上傳至少一個文件"
+        }
+      },
+      "passwordRequired": {
+        "label": "需要密碼",
+        "placeholder": ""
+      },
+      "password": {
+        "label": "密碼",
+        "placeholder": "請輸入密碼",
+        "errors": {
+          "required": "請輸入密碼"
+        }
+      },
+      "expireIn": {
+        "label": "有效期限",
+        "placeholder": "請選擇有效期限"
+      },
+      "prompt": {
+        "label": "提示文字",
+        "placeholder": "請輸入提示文字"
+      },
+      "submit": "上傳",
+      "submitting": "上傳中..."
+    },
+    "successPrompt": "上傳成功",
+    "continueUploading": "繼續上傳"
+  },
+  "MediaPage": {
+    "title": "最安全、快速、方便、免費的短網址服務",
+    "subtitle": "上傳影片、上傳音訊",
+    "form": {
+      "files": {
+        "label": "",
+        "placeholder": "上傳影片、上傳音訊",
+        "errors": {
+          "required": "請上傳至少一個文件"
+        }
+      },
+      "passwordRequired": {
+        "label": "需要密碼",
+        "placeholder": ""
+      },
+      "password": {
+        "label": "密碼",
+        "placeholder": "請輸入密碼",
+        "errors": {
+          "required": "請輸入密碼"
+        }
+      },
+      "expireIn": {
+        "label": "有效期限",
+        "placeholder": "請選擇有效期限"
+      },
+      "prompt": {
+        "label": "提示文字",
+        "placeholder": "請輸入提示文字"
+      },
+      "submit": "上傳",
+      "submitting": "上傳中..."
+    },
+    "successPrompt": "上傳成功",
+    "continueUploading": "繼續上傳"
+  },
+  "resolvePage": {
+    "promptText": "提示內容",
+    "none": "無"
+  }
+}

@@ -1,5 +1,6 @@
 import { Record } from "@/request/types";
-import { ImagePreivew } from "../ImagePreview";
+import { MediaShow } from "./mediaShow";
+import { MediaPreivew } from "../mediaPreview";
 import { useTranslations } from "next-intl";
 
 type Props = {
@@ -7,7 +8,7 @@ type Props = {
   token: string;
 };
 
-export const ImageResolve: React.FC<Props> = ({ record, token }) => {
+export const MediaResolve: React.FC<Props> = ({ record, token }) => {
   const t = useTranslations("resolvePage");
 
   return (
@@ -19,7 +20,7 @@ export const ImageResolve: React.FC<Props> = ({ record, token }) => {
         <div>
           {(record?.assets || []).map((asset) => {
             return (
-              <ImagePreivew
+              <MediaPreivew
                 key={asset.key}
                 assetKey={asset.key}
                 token={token}

@@ -5,10 +5,14 @@ export type ApiResponse<T> = {
 };
 
 export type PostAssetUploadResponse = ApiResponse<{
-  assets: string[];
+  assetIds: string[];
 }>;
 
 export type PostRecordImageResponse = ApiResponse<{
+  uniqueId: string;
+}>;
+
+export type PostRecordMediaResponse = ApiResponse<{
   uniqueId: string;
 }>;
 
@@ -23,7 +27,7 @@ export type Record = {
   passwordRequired: boolean;
   createdAt: string;
   assets?: Array<{
-    filename: string;
+    key: string;
   }>;
   urls?: Array<{
     content: string,
@@ -34,7 +38,6 @@ export type GetRecordApiResponse = ApiResponse<{
   record: Record;
   token: string;
   tokenVerified: boolean;
-  fullInfo: boolean;
 }>;
 
 export type PostImageRecordBody = {

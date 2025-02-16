@@ -1,5 +1,123 @@
 {
-    "HomePage": {
-      "title": "Hello world!"
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "Global": {
+    "title": "",
+    "description": "",
+    "1min": "1 minute",
+    "5min": "5 minutes",
+    "30min": "30 minutes",
+    "1hour": "1 hour",
+    "6hour": "6 hours",
+    "12hour": "12 hours",
+    "3day": "3 day",
+    "7day": "7 days",
+    "10day": "10 days",
+    "30day": "30 days",
+    "Unlimited": "Unlimited"
+  },
+  "Header": {
+    "links": {
+      "shortenUrlLink": "URL Shortener",
+      "shortenImageLink": "Image URL Shortener",
+      "shortenMediaLink": "Video URL Shortener",
+      "policyLink": "Privacy policy"
+    },
+    "language": {
+      "english": "English",
+      "chinese": "Chinese"
     }
+  },
+  "UrlPage": {
+    "title": "The safest, fastest, most convenient, and free URL shortening service",
+    "form": {
+      "content": {
+        "placeholder": "Please enter a url",
+        "errors": {
+          "required": "Please enter a url"
+        }
+      },
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    },
+    "successPrompt": "Shorten success",
+    "continueShortening": "Continue shortening"
+  },
+  "ImagePage": {
+    "title": "The safest, fastest, most convenient, and free URL shortening service",
+    "subtitle": "Upload images, upload media",
+    "form": {
+      "files": {
+        "label": "",
+        "placeholder": "Upload images, upload media",
+        "errors": {
+          "required": "Please upload at least one file"
+        }
+      },
+      "passwordRequired": {
+        "label": "Password required",
+        "placeholder": ""
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Please enter a password",
+        "errors": {
+          "required": "Please enter a password"
+        }
+      },
+      "expireIn": {
+        "label": "Expiration time",
+        "placeholder": "Please select an expiration time"
+      },
+      "prompt": {
+        "label": "Prompt text",
+        "placeholder": "Please enter prompt text"
+      },
+      "submit": "Upload",
+      "submitting": "Uploading..."
+    },
+    "successPrompt": "Upload success",
+    "continueUploading": "Continue uploading"
+  },
+  "MediaPage": {
+    "title": "The safest, fastest, most convenient, and free URL shortening service",
+    "subtitle": "Upload videos, upload audio",
+    "form": {
+      "files": {
+        "label": "",
+        "placeholder": "Upload videos, upload audio",
+        "errors": {
+          "required": "Please upload at least one file"
+        }
+      },
+      "passwordRequired": {
+        "label": "Password required",
+        "placeholder": ""
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Please enter a password",
+        "errors": {
+          "required": "Please enter a password"
+        }
+      },
+      "expireIn": {
+        "label": "Expiration time",
+        "placeholder": "Please select an expiration time"
+      },
+      "prompt": {
+        "label": "Prompt text",
+        "placeholder": "Please enter prompt text"
+      },
+      "submit": "Upload",
+      "submitting": "Uploading..."
+    },
+    "successPrompt": "Upload success",
+    "continueUploading": "Continue uploading"
+  },
+  "resolvePage": {
+    "promptText": "Prompt text",
+    "none": "None"
   }
+}

@@ -4,9 +4,10 @@ import { useForm } from "@tanstack/react-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { postRecordUrl } from "@/request/requests";
+import { useTranslations } from "next-intl";
 
 type Props = {
-    onSuccess: (uniqueId: string) => void;
+  onSuccess: (uniqueId: string) => void;
 };
 
 export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
@@ -20,37 +21,69 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
       const json = await postRecordUrl(value.content);
       onSuccess(json.data.uniqueId);
     },
+    validators: {
+      onSubmit: (v) => {
+        return {
+          fields: {
+            content: !v.value.content
+              ? "form.content.errors.required"
+              : undefined,
+          },
+        };
+      },
+    },
   });
 
-  const submit = () => {};
+  const t = useTranslations("UrlPage");
 
   return (
     <div className="w-full">
       <form
         className="w-full flex flex-col items-center gap-6"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           e.stopPropagation();
+          await form.validateAllFields("submit");
           form.handleSubmit();
         }}
       >
         <form.Field
           name="content"
           children={(field) => (
-            <Input
-              placeholder="請輸入網址"
-              value={field.state.value}
-              className="bg-primary-foreground text-black rounded-2xl max-w-xl"
-              onChange={(e) => {
-                field.handleChange(e.target.value);
-              }}
-            />
+            <div className="flex flex-col w-full items-center space-y-2">
+              <div className="h-6 flex justify-start">
+                {field.state.meta.errors.length
+                  ? field.state.meta.errors.map((error) => (
+                      <em
+                        role="alert"
+                        className="font-semibold text-sm text-red-500"
+                      >
+                        * {t(error)}
+                      </em>
+                    ))
+                  : null}
+              </div>
+              <Input
+                placeholder={t("form.content.placeholder")}
+                value={field.state.value}
+                className="bg-primary-foreground text-black rounded-2xl max-w-xl"
+                onChange={(e) => {
+                  field.handleChange(e.target.value);
+                }}
+              />
+            </div>
           )}
         />
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-             <Button type="submit" disabled={!canSubmit} className="w-44 rounded-2xl">{isSubmitting ? "送出中..." : "送出"}</Button>
+            <Button
+              type="submit"
+              disabled={!canSubmit}
+              className="w-44 rounded-2xl"
+            >
+              {isSubmitting ? t("form.submitting") : t("form.submit")}
+            </Button>
           )}
         />
       </form>

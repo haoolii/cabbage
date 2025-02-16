@@ -1,11 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { useForm, useStore } from "@tanstack/react-form";
-import { postAssetUpload, postRecordImage } from "@/request/requests";
-import { v4 as uuid } from "uuid";
-
-import { Input } from "../ui/input";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -13,12 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { ImageShow } from "./imageShow";
+import { Checkbox } from "../ui/checkbox";
+import { postAssetUpload, postRecordMedia } from "@/request/requests";
+import { v4 as uuid } from "uuid";
+import { MediaShow } from "./mediaShow";
+import { useTranslations } from "next-intl";
 import { useExpireTimes } from "@/hooks/useExpireTimes";
 
-const allowedFileTypes = [".jpg", ".jpeg", ".png", ".gif"];
+const allowedFileTypes = [".mp3", ".mp4"];
 
 type FileWrapper = {
   file: File;
@@ -29,37 +27,45 @@ type Props = {
   onSuccess?: (files: File[], uniqueId: string) => void;
 };
 
-export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
-  const t = useTranslations("ImagePage");
+export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<{
     files: FileWrapper[];
     passwordRequired: boolean;
     password: string;
     prompt: string;
-    expireIn: string;
+    expireIn: number;
   }>({
     defaultValues: {
       files: [],
       passwordRequired: false,
       password: "",
       prompt: "",
-      expireIn: "60",
+      expireIn: 60,
     },
     onSubmit: async ({ value }) => {
-      const uploadJson = await postAssetUpload(value.files.map((f) => f.file));
-      const postRecordJson = await postRecordImage({
-        assetIds: uploadJson.data.assetIds,
-        prompt: value.prompt,
-        passwordRequired: value.passwordRequired,
-        password: value.passwordRequired ? value.password : "",
-        expireIn: +value.expireIn,
-      });
-
-      onSuccess(
-        value.files.map((f) => f.file),
-        postRecordJson.data.uniqueId
-      );
+      try {
+        setIsLoading(true);
+        console.log("value", value);
+        const uploadJson = await postAssetUpload(
+          value.files.map((f) => f.file)
+        );
+        const postRecordJson = await postRecordMedia({
+          assetIds: uploadJson.data.assetIds,
+          prompt: value.prompt,
+          passwordRequired: value.passwordRequired,
+          password: value.passwordRequired ? value.password : "",
+          expireIn: value.expireIn,
+        });
+        onSuccess(
+          value.files.map((f) => f.file),
+          postRecordJson.data.uniqueId
+        );
+      } catch (err) {
+      } finally {
+        setIsLoading(false);
+      }
     },
     validators: {
       onSubmit: (v) => {
@@ -92,6 +98,8 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
     );
   };
 
+  const t = useTranslations("MediaPage");
+
   const expireTimes = useExpireTimes();
 
   return (
@@ -112,7 +120,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
         >
           {files.map((file) => (
             <div key={file.id}>
-              <ImageShow
+              <MediaShow
                 file={file.file}
                 onRemove={() => {
                   onRemove(file.id);
@@ -227,7 +235,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                       field.state.value ? `${field.state.value}` : undefined
                     }
                     onValueChange={(v) => {
-                      field.handleChange(v);
+                      field.handleChange(Number(v));
                     }}
                   >
                     <SelectTrigger className="bg-primary-foreground rounded-2xl text-black">

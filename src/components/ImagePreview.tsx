@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 type Props = {
-  filename: string;
+  assetKey: string;
   token: string;
 };
-export const ImagePreivew: React.FC<Props> = ({ filename, token }) => {
+export const ImagePreivew: React.FC<Props> = ({ assetKey, token }) => {
   const [src, setSrc] = useState("");
 
   const loadImage = async (url: string) => {
@@ -21,8 +21,9 @@ export const ImagePreivew: React.FC<Props> = ({ filename, token }) => {
   };
 
   useEffect(() => {
-    loadImage(`http://localhost:3000/o/${filename}`);
-  }, [filename]);
+    loadImage(`http://localhost:3000/o/${assetKey}`);
+    // console.log('')
+  }, [assetKey]);
 
   return <div>{src && <img src={src} />}</div>;
 };

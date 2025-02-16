@@ -1,26 +1,26 @@
 "use client";
 
-import { ImageForm } from "@/components/image/imageForm";
 import { useState } from "react";
-import { ImageSuccess } from "./imageSuccess";
+import { MediaSuccess } from "./mediaSuccess";
+import { MediaForm } from "./mediaForm";
 
 type Props = {};
 
-export const ImageProcess: React.FC<Props> = () => {
+export const MediaProcess: React.FC<Props> = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [uniqueId, setUniqueId] = useState<string>("");
- 
+
   return (
     <div className="w-full flex justify-center">
       {!uniqueId ? (
-        <ImageForm
+        <MediaForm
           onSuccess={(files, uniqueId) => {
             setFiles(files);
             setUniqueId(uniqueId);
           }}
         />
       ) : (
-        <ImageSuccess
+        <MediaSuccess
           files={files}
           uniqueId={uniqueId}
           onReset={() => {

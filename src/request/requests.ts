@@ -5,11 +5,13 @@ import {
   PostImageRecordBody,
   PostMediaRecordBody,
   PostRecordImageResponse,
+  PostRecordMediaResponse,
   PostRecordPasswordApiResponse,
   PostRecordPasswordBody,
   PostRecordUrlResponse,
 } from "./types";
 import { replacePathParams } from "./util";
+// import axios from 'axios';
 
 export const postAssetUpload = async (files: File[]) => {
   const formData = new FormData();
@@ -66,27 +68,26 @@ export const postRecordMedia = async (body: PostMediaRecordBody) => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
   const url = api.postRecordMedia;
-
+  console.log('urll', url)
   const response = await fetch(url, {
     method: "POST",
     headers,
     body: JSON.stringify(body),
   });
 
-  const json = await response.json();
+  const json = await response.json() as PostRecordMediaResponse;
 
   return json;
 };
 
 export const getRecordDetail = async (uniqueId: string, token?: string) => {
   const url = replacePathParams(api.getQueryRecord, { uniqueId });
-
   const response = await fetch(url, {
     method: "GET",
     headers: token
       ? {
-          Authorization: `Bearer ${token}`,
-        }
+        Authorization: `Bearer ${token}`,
+      }
       : {},
   });
 
