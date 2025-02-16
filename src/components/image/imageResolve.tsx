@@ -1,14 +1,17 @@
 import { Record } from "@/request/types";
 import { ImagePreivew } from "../ImagePreview";
-import { useTranslations } from "next-intl";
+import { getRecordCount } from "@/request/requests";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   record: Record;
   token: string;
+  count: number;
 };
 
-export const ImageResolve: React.FC<Props> = ({ record, token }) => {
-  const t = useTranslations("resolvePage");
+export const ImageResolve: React.FC<Props> = async ({ record, token, count }) => {
+  const t = await getTranslations("resolvePage")
+
 
   return (
     <div className="w-full flex justify-center py-10">
@@ -16,6 +19,9 @@ export const ImageResolve: React.FC<Props> = ({ record, token }) => {
         <span className="font-medium text-sm text-primary-foreground/60">
           {t("promptText")}: {record.prompt || t("none")}
         </span>
+        <div>
+          count: {count}
+        </div>
         <div>
           {(record?.assets || []).map((asset) => {
             return (

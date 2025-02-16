@@ -40,6 +40,10 @@ export type GetRecordApiResponse = ApiResponse<{
   tokenVerified: boolean;
 }>;
 
+export type GetRecordCountApiResponse = ApiResponse<{
+  count: number;
+}>;
+
 export type PostImageRecordBody = {
   prompt?: string;
   password?: string;

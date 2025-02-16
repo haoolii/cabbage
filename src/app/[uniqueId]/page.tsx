@@ -3,7 +3,7 @@ import { ImageResolve } from "@/components/image/imageResolve";
 import { MediaResolve } from "@/components/media/mediaResolve";
 import { ExpiredNotFound } from "@/components/resolve/expiredNotFound";
 import { PasswordResolve } from "@/components/resolve/passwordResolve";
-import { getRecordDetail } from "@/request/requests";
+import { getRecordCount, getRecordDetail } from "@/request/requests";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -22,6 +22,9 @@ export default async function UniqueId({
       cookie.get("Authorization")?.value
     );
 
+    const countJson = await getRecordCount(uniqueId);
+
+
     const type = getRecordDetailJson?.data?.record?.type;
 
     if (type === "url") {
@@ -34,9 +37,6 @@ export default async function UniqueId({
     // expired or not exist
     if (!getRecordDetailJson?.data) {
       return <>
-      {/* <pre>
-      </pre> */}
-        {JSON.stringify(getRecordDetailJson, null, 2)}
         <ExpiredNotFound />
       </>
     }
@@ -72,6 +72,7 @@ export default async function UniqueId({
         <ImageResolve
           record={getRecordDetailJson?.data?.record}
           token={getRecordDetailJson.data.token}
+          count={countJson.data.count || 0}
         />
       </>
     );

@@ -9,6 +9,7 @@ const paths = {
   postRecordImage: "/record/image",
   postRecordMedia: "/record/media",
   getQueryRecord: "/record/:uniqueId",
+  getQueryRecordCount: "/record/:uniqueId/count",
   postRecordPassword: "/record/:uniqueId/password",
 };
 

@@ -1,6 +1,7 @@
 import { api } from "./endpoint";
 import {
   GetRecordApiResponse,
+  GetRecordCountApiResponse,
   PostAssetUploadResponse,
   PostImageRecordBody,
   PostMediaRecordBody,
@@ -43,7 +44,7 @@ export const postRecordUrl = async (content: string) => {
     }),
   });
 
-  const json = await response.json() as PostRecordUrlResponse;
+  const json = (await response.json()) as PostRecordUrlResponse;
 
   return json;
 };
@@ -68,14 +69,13 @@ export const postRecordMedia = async (body: PostMediaRecordBody) => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
   const url = api.postRecordMedia;
-  console.log('urll', url)
   const response = await fetch(url, {
     method: "POST",
     headers,
     body: JSON.stringify(body),
   });
 
-  const json = await response.json() as PostRecordMediaResponse;
+  const json = (await response.json()) as PostRecordMediaResponse;
 
   return json;
 };
@@ -86,12 +86,23 @@ export const getRecordDetail = async (uniqueId: string, token?: string) => {
     method: "GET",
     headers: token
       ? {
-        Authorization: `Bearer ${token}`,
-      }
+          Authorization: `Bearer ${token}`,
+        }
       : {},
   });
 
   const json = (await response.json()) as GetRecordApiResponse;
+
+  return json;
+};
+
+export const getRecordCount = async (uniqueId: string) => {
+  const url = replacePathParams(api.getQueryRecordCount, { uniqueId });
+  const response = await fetch(url, {
+    method: "GET",
+  });
+
+  const json = (await response.json()) as GetRecordCountApiResponse;
 
   return json;
 };
