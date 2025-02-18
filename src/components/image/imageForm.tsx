@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useForm, useStore } from "@tanstack/react-form";
-import { postAssetUpload, postRecordImage } from "@/request/requests";
+import { postRecordImage } from "@/request/requests";
 import { v4 as uuid } from "uuid";
 
 import { Input } from "../ui/input";
@@ -47,13 +47,12 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
       expireIn: "60",
     },
     onSubmit: async ({ value }) => {
-      const uploadJson = await postAssetUpload(value.files.map((f) => f.file));
       const postRecordJson = await postRecordImage({
-        assetIds: uploadJson.data.assetIds,
         prompt: value.prompt,
         passwordRequired: value.passwordRequired,
         password: value.passwordRequired ? value.password : "",
         expireIn: +value.expireIn,
+        files: value.files.map((f) => f.file)
       });
 
       onSuccess(

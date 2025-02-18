@@ -49,17 +49,22 @@ export const postRecordUrl = async (content: string) => {
   return json;
 };
 
-export const postRecordImage = async (body: PostImageRecordBody) => {
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-  const url = api.postRecordImage;
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
+export const postRecordImage = async (body: PostImageRecordBody) => {
+  const formData = new FormData();
+  formData.append('expireIn', `${body.expireIn}`)
+  formData.append('prompt', body.prompt || "")
+  formData.append('password', body.password || "");
+  formData.append('passwordRequired', `${body.passwordRequired}`)
+
+  body.files?.forEach((file, index) => {
+    formData.append("files", file);
   });
 
+  const response = await fetch(api.postRecordImage, {
+    method: "POST",
+    body: formData,
+  });
   const json = (await response.json()) as PostRecordImageResponse;
 
   return json;

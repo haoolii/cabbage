@@ -44,14 +44,6 @@ export type GetRecordCountApiResponse = ApiResponse<{
   count: number;
 }>;
 
-export type PostImageRecordBody = {
-  prompt?: string;
-  password?: string;
-  passwordRequired: boolean;
-  expireIn: number;
-  assetIds: string[];
-};
-
 export type PostMediaRecordBody = {
   prompt?: string;
   password?: string;
@@ -67,3 +59,12 @@ export type PostRecordPasswordBody = {
 export type PostRecordPasswordApiResponse = ApiResponse<{
   token: string;
 }>;
+
+
+export type PostImageRecordBody = {
+  prompt?: string;
+  password?: string;
+  passwordRequired: boolean;
+  expireIn: number;
+  files?: File[]
+};
