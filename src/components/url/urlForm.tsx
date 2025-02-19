@@ -5,21 +5,33 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { postRecordUrl } from "@/request/requests";
 import { useTranslations } from "next-intl";
+import { isSuccess } from "@/request/util";
+import { useErrorCodeToast } from "@/hooks/useErrorToast";
+import { Captcha } from "../captcha";
 
 type Props = {
   onSuccess: (uniqueId: string) => void;
 };
 
 export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
+  const { errorCodeToast } = useErrorCodeToast();
   const form = useForm<{
     content: string;
+    captchToken: string;
   }>({
     defaultValues: {
       content: "",
+      captchToken: "",
     },
     onSubmit: async ({ value }) => {
-      const json = await postRecordUrl(value.content);
-      onSuccess(json.data.uniqueId);
+      const json = await postRecordUrl({
+        content: value.content,
+        captchaToken: value.captchToken,
+      });
+      if (isSuccess(json)) {
+        onSuccess(json.data.uniqueId);
+      }
+      errorCodeToast(json.code);
     },
     validators: {
       onSubmit: (v) => {
@@ -27,6 +39,9 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
           fields: {
             content: !v.value.content
               ? "form.content.errors.required"
+              : undefined,
+            captchToken: !v.value.captchToken
+              ? "form.captchaToken.errors.required"
               : undefined,
           },
         };
@@ -71,6 +86,24 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
                   field.handleChange(e.target.value);
                 }}
               />
+            </div>
+          )}
+        />
+        <form.Field
+          name="captchToken"
+          children={(field) => (
+            <div className="flex flex-col items-center gap-2">
+              <Captcha onVerify={(token) => field.handleChange(token)} />
+              {field.state.meta.errors.length
+                ? field.state.meta.errors.map((error) => (
+                    <em
+                      role="alert"
+                      className="font-semibold text-sm text-red-500"
+                    >
+                      * {t(error)}
+                    </em>
+                  ))
+                : null}
             </div>
           )}
         />

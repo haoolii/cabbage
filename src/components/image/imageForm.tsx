@@ -17,6 +17,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
 import { ImageShow } from "./imageShow";
 import { useExpireTimes } from "@/hooks/useExpireTimes";
+import { Captcha } from "../captcha";
 
 const allowedFileTypes = [".jpg", ".jpeg", ".png", ".gif"];
 
@@ -38,6 +39,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
     password: string;
     prompt: string;
     expireIn: string;
+    captchToken: string;
   }>({
     defaultValues: {
       files: [],
@@ -45,6 +47,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
       password: "",
       prompt: "",
       expireIn: "60",
+      captchToken: "",
     },
     onSubmit: async ({ value }) => {
       const postRecordJson = await postRecordImage({
@@ -52,7 +55,8 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
         passwordRequired: value.passwordRequired,
         password: value.passwordRequired ? value.password : "",
         expireIn: +value.expireIn,
-        files: value.files.map((f) => f.file)
+        files: value.files.map((f) => f.file),
+        captchaToken: value.captchToken
       });
 
       onSuccess(
@@ -70,6 +74,9 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                 : undefined,
             files: !v.value.files.length
               ? "form.files.errors.required"
+              : undefined,
+            captchToken: !v.value.captchToken
+              ? "form.captchaToken.errors.required"
               : undefined,
           },
         };
@@ -268,13 +275,31 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                 </label>
               )}
             />
+            <form.Field
+              name="captchToken"
+              children={(field) => (
+                <div className="flex flex-col items-center gap-2">
+                  <Captcha onVerify={(token) => field.handleChange(token)} />
+                  {field.state.meta.errors.length
+                    ? field.state.meta.errors.map((error) => (
+                        <em
+                          role="alert"
+                          className="font-semibold text-sm text-red-500"
+                        >
+                          * {t(error)}
+                        </em>
+                      ))
+                    : null}
+                </div>
+              )}
+            />
           </div>
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             children={([canSubmit, isSubmitting]) => (
               <Button
                 type="submit"
-                disabled={!canSubmit}
+                disabled={isSubmitting}
                 className="w-44 rounded-2xl"
               >
                 {isSubmitting ? t("form.submitting") : t("form.submit")}

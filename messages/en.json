@@ -38,6 +38,11 @@
           "required": "Please enter a url"
         }
       },
+      "captchaToken": {
+        "errors": {
+          "required": "Please pass the verifciation"
+        }
+      },
       "submit": "Submit",
       "submitting": "Submitting..."
     },
@@ -73,6 +78,11 @@
       "prompt": {
         "label": "Prompt text",
         "placeholder": "Please enter prompt text"
+      },
+      "captchaToken": {
+        "errors": {
+          "required": "Please pass the verifciation"
+        }
       },
       "submit": "Upload",
       "submitting": "Uploading..."
@@ -110,6 +120,11 @@
         "label": "Prompt text",
         "placeholder": "Please enter prompt text"
       },
+      "captchaToken": {
+        "errors": {
+          "required": "Please pass the verifciation"
+        }
+      },
       "submit": "Upload",
       "submitting": "Uploading..."
     },
@@ -119,5 +134,24 @@
   "resolvePage": {
     "promptText": "Prompt text",
     "none": "None"
+  },
+  "ErrorCode": {
+    "0": "Operation completed successfully.",
+    "1": "An error occurred.",
+    "2": "Operation failed.",
+    
+    "20000": "Validation error.",
+    "20001": "Invalid data type.",
+    "20002": "Resource not found.",
+    "20003": "Incorrect password.",
+    "20004": "File upload failed.",
+    "20005": "Failed to generate a unique ID.",
+    "20006": "Unsupported file type.",
+    "20007": "File is empty.",
+    "20008": "File not found.",
+    "20009": "Record has expired.",
+    "20010": "Invalid request data.",
+    
+    "80001": "Unauthorized access."
   }
 }

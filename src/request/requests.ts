@@ -30,7 +30,13 @@ export const postAssetUpload = async (files: File[]) => {
   return json;
 };
 
-export const postRecordUrl = async (content: string) => {
+export const postRecordUrl = async ({
+  content,
+  captchaToken,
+}: {
+  content: string;
+  captchaToken: string;
+}) => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 
@@ -41,6 +47,7 @@ export const postRecordUrl = async (content: string) => {
     headers,
     body: JSON.stringify({
       content,
+      captchaToken,
     }),
   });
 
@@ -49,13 +56,13 @@ export const postRecordUrl = async (content: string) => {
   return json;
 };
 
-
 export const postRecordImage = async (body: PostImageRecordBody) => {
   const formData = new FormData();
-  formData.append('expireIn', `${body.expireIn}`)
-  formData.append('prompt', body.prompt || "")
-  formData.append('password', body.password || "");
-  formData.append('passwordRequired', `${body.passwordRequired}`)
+  formData.append("expireIn", `${body.expireIn}`);
+  formData.append("prompt", body.prompt || "");
+  formData.append("password", body.password || "");
+  formData.append("passwordRequired", `${body.passwordRequired}`);
+  formData.append("captchaToken", `${body.captchaToken}`);
 
   body.files?.forEach((file, index) => {
     formData.append("files", file);
@@ -71,16 +78,22 @@ export const postRecordImage = async (body: PostImageRecordBody) => {
 };
 
 export const postRecordMedia = async (body: PostMediaRecordBody) => {
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-  const url = api.postRecordMedia;
-  const response = await fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
+  const formData = new FormData();
+  formData.append("expireIn", `${body.expireIn}`);
+  formData.append("prompt", body.prompt || "");
+  formData.append("password", body.password || "");
+  formData.append("passwordRequired", `${body.passwordRequired}`);
+  formData.append("captchaToken", `${body.captchaToken}`);
+
+  body.files?.forEach((file, index) => {
+    formData.append("files", file);
   });
 
-  const json = (await response.json()) as PostRecordMediaResponse;
+  const response = await fetch(api.postRecordMedia, {
+    method: "POST",
+    body: formData,
+  });
+  const json = (await response.json()) as PostRecordImageResponse;
 
   return json;
 };

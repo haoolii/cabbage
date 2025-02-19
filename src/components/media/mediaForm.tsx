@@ -10,11 +10,12 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
-import { postAssetUpload, postRecordMedia } from "@/request/requests";
+import { postRecordMedia } from "@/request/requests";
 import { v4 as uuid } from "uuid";
 import { MediaShow } from "./mediaShow";
 import { useTranslations } from "next-intl";
 import { useExpireTimes } from "@/hooks/useExpireTimes";
+import { Captcha } from "../captcha";
 
 const allowedFileTypes = [".mp3", ".mp4"];
 
@@ -36,6 +37,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
     password: string;
     prompt: string;
     expireIn: number;
+    captchToken: string;
   }>({
     defaultValues: {
       files: [],
@@ -43,20 +45,18 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
       password: "",
       prompt: "",
       expireIn: 60,
+      captchToken: ""
     },
     onSubmit: async ({ value }) => {
       try {
         setIsLoading(true);
-        console.log("value", value);
-        const uploadJson = await postAssetUpload(
-          value.files.map((f) => f.file)
-        );
         const postRecordJson = await postRecordMedia({
-          assetIds: uploadJson.data.assetIds,
+          files: value.files.map((f) => f.file),
           prompt: value.prompt,
           passwordRequired: value.passwordRequired,
           password: value.passwordRequired ? value.password : "",
           expireIn: value.expireIn,
+          captchaToken: value.captchToken
         });
         onSuccess(
           value.files.map((f) => f.file),
@@ -77,6 +77,9 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                 : undefined,
             files: !v.value.files.length
               ? "form.files.errors.required"
+              : undefined,
+            captchToken: !v.value.captchToken
+              ? "form.captchaToken.errors.required"
               : undefined,
           },
         };
@@ -277,13 +280,31 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                 </label>
               )}
             />
+            <form.Field
+              name="captchToken"
+              children={(field) => (
+                <div className="flex flex-col items-center gap-2">
+                  <Captcha onVerify={(token) => field.handleChange(token)} />
+                  {field.state.meta.errors.length
+                    ? field.state.meta.errors.map((error) => (
+                        <em
+                          role="alert"
+                          className="font-semibold text-sm text-red-500"
+                        >
+                          * {t(error)}
+                        </em>
+                      ))
+                    : null}
+                </div>
+              )}
+            />
           </div>
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             children={([canSubmit, isSubmitting]) => (
               <Button
                 type="submit"
-                disabled={!canSubmit}
+                disabled={isSubmitting}
                 className="w-44 rounded-2xl"
               >
                 {isSubmitting ? t("form.submitting") : t("form.submit")}

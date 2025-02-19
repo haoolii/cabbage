@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import env from "@/core/env";
 import { useTranslations } from "next-intl";
+import { CopyUrl } from "../copyUrl";
 
 type Props = {
   uniqueId: string;
@@ -16,13 +17,11 @@ export const UrlSuccess: React.FC<Props> = ({ uniqueId, onReset }) => {
         <h2 className="font-bold text-3xl">{t("successPrompt")}</h2>
       </div>
 
-      <div>
-        <Link target="_blank" href={uniqueIdUrl}>
-          {uniqueIdUrl}
-        </Link>
+      <div className="py-4">
+        <CopyUrl url={uniqueIdUrl} />
       </div>
       <Button onClick={() => onReset()} className="w-44 rounded-2xl">
-        {t("continueShortening")}
+        {t("continueUploading")}
       </Button>
     </div>
   );

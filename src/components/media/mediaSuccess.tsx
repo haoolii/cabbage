@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { MediaShow } from "./mediaShow";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { CopyUrl } from "../copyUrl";
 
 type Props = {
   files: File[];
@@ -26,8 +27,8 @@ export const MediaSuccess: React.FC<Props> = ({ files, uniqueId, onReset }) => {
         </div>
       ))}
 
-      <div>
-        <Link href={uniqueIdUrl}>{uniqueIdUrl}</Link>
+      <div className="py-4">
+        <CopyUrl url={uniqueIdUrl} />
       </div>
       <Button onClick={() => onReset()} className="w-44 rounded-2xl">
         {t("continueUploading")}

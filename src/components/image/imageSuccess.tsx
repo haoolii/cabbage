@@ -1,8 +1,10 @@
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import { ImageShow } from "./imageShow";
+import { CopyUrl } from "../copyUrl";
 import env from "@/core/env";
-import { useTranslations } from "next-intl";
 
 type Props = {
   files: File[];
@@ -25,8 +27,8 @@ export const ImageSuccess: React.FC<Props> = ({ files, uniqueId, onReset }) => {
         </div>
       ))}
 
-      <div>
-        <Link href={uniqueIdUrl}>{uniqueIdUrl}</Link>
+      <div className="py-4">
+        <CopyUrl url={uniqueIdUrl} />
       </div>
       <Button onClick={() => onReset()} className="w-44 rounded-2xl">
         {t("continueUploading")}

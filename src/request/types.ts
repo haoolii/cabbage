@@ -49,11 +49,13 @@ export type PostMediaRecordBody = {
   password?: string;
   passwordRequired: boolean;
   expireIn: number;
-  assetIds: string[];
+  files?: File[];
+  captchaToken: string;
 };
 
 export type PostRecordPasswordBody = {
   password: string;
+  captchaToken: string;
 };
 
 export type PostRecordPasswordApiResponse = ApiResponse<{
@@ -67,4 +69,5 @@ export type PostImageRecordBody = {
   passwordRequired: boolean;
   expireIn: number;
   files?: File[]
+  captchaToken: string;
 };

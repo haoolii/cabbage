@@ -5,6 +5,9 @@ import { Header } from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +35,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${montserrat.className} antialiased dark`}
       >
         <NextIntlClientProvider messages={messages}>
           <>

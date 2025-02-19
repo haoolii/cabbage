@@ -6,30 +6,26 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Record } from "@/request/types";
 import { isSuccess } from "@/request/util";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "../ui/toast";
+import { useErrorCodeToast } from "@/hooks/useErrorToast";
+import { Captcha } from "../captcha";
 type Props = {
   uniqueId: string;
   record: Record;
 };
 export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
   const [password, setPassword] = useState("");
-  const { toast } = useToast()
+  const [captchaToken, setCaptchaToken] = useState("");
+  const { errorCodeToast } = useErrorCodeToast();
 
   const onSubmit = async () => {
-    const json = await postRecordPassword(uniqueId, { password });
+    const json = await postRecordPassword(uniqueId, { password, captchaToken });
     setPassword("");
-    console.log('json', json)
     if (isSuccess(json)) {
       document.cookie = `Authorization=${json?.data?.token}; path=/;`;
       window.location.reload();
       return;
     }
-    toast({
-      variant: "destructive",
-      title: "錯誤提示",
-      description: "密碼錯誤",
-    })
+    errorCodeToast(json.code);
   };
 
   return (
@@ -47,7 +43,8 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
           className="bg-primary-foreground text-black rounded-2xl max-w-xl"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button className="w-44 rounded-2xl" onClick={() => onSubmit()}>
+        <Captcha onVerify={(token) => setCaptchaToken(token)} />
+        <Button className="w-44 rounded-2xl" disabled={!(captchaToken && password)} onClick={() => onSubmit()}>
           送出
         </Button>
       </div>
