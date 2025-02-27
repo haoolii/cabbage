@@ -139,7 +139,6 @@
     "0": "Operation completed successfully.",
     "1": "An error occurred.",
     "2": "Operation failed.",
-    
     "20000": "Validation error.",
     "20001": "Invalid data type.",
     "20002": "Resource not found.",
@@ -151,7 +150,46 @@
     "20008": "File not found.",
     "20009": "Record has expired.",
     "20010": "Invalid request data.",
-    
     "80001": "Unauthorized access."
+  },
+  "Policy": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "1_title": "1. Scope of Privacy Protection Policy",
+      "1_content": "The privacy protection policy includes how this website handles personal identifiable data collected when you use the services provided by this website. This privacy protection policy does not apply to websites linked to this website or to personnel not commissioned or involved in managing this website.",
+      "2_title": "2. Collection, Processing, and Use of Personal Data",
+      "2_content": "When you visit this website or use the functions and services provided by this website, we will request that you provide necessary personal data based on the nature of the service. We will process and use your personal data within the specific purpose for which it was collected. Without your written consent, this website will not use your personal data for other purposes.\n\nThis website will retain your name, email address, contact information, and usage time when you use interactive features such as service emails or surveys.\n\nDuring general browsing, the server will automatically record relevant behaviors, including the IP address of the device you use to connect, usage time, browser used, and browsing and click data records. These records are used internally to improve our website services and will not be disclosed externally.\n\nTo provide precise services, we will conduct statistical analysis of the content collected from surveys. The results of the analysis, including statistical data and explanatory text, will be used for internal research and may be published as needed, but will not involve specific personal data.\n\nYou can request to correct or delete your account or personal data collected by this website at any time. Please refer to the contact information below to submit your request.",
+      "3_title": "3. Data Protection",
+      "3_content": "This website's servers are equipped with firewalls, antivirus systems, and other security equipment to protect the website and your personal data. Strict protection measures are implemented, allowing only authorized personnel to access your personal data. All handling personnel have signed confidentiality agreements, and any violation of confidentiality obligations will be subject to legal sanctions.\n\nIf it is necessary to commission other units to provide services due to business needs, this website will strictly require them to comply with confidentiality obligations and implement necessary inspection procedures to ensure compliance.",
+      "4_title": "4. External Links",
+      "4_content": "This website provides links to other websites, and you can access these websites through the links provided. However, please note that these linked websites are not subject to this website's privacy protection policy. You must refer to the privacy protection policy of the linked website.",
+      "5_title": "5. Policy on Sharing Personal Data with Third Parties",
+      "5_content": "This website will not provide, exchange, rent, or sell any of your personal data to other individuals, groups, private enterprises, or government agencies, except in cases with legal grounds or contractual obligations.\n\nThe exceptions include:\n\n- Obtaining your written consent.\n- As stipulated by law.\n- To prevent danger to your life, body, freedom, or property.\n- Cooperation with government agencies or academic research institutions for statistical or academic research purposes, provided that the data has been processed to prevent identification of specific individuals.\n- When your behavior on the website violates the terms of service or may harm or impede the rights of the website and other users, or cause harm to anyone, and it is necessary to disclose your personal data for identification, contact, or legal action.\n- When it is beneficial to your interests.\n- When this website commissions vendors to assist in collecting, processing, or using your personal data, we will ensure that these vendors are supervised and managed properly.",
+      "6_title": "6. Use of Cookies",
+      "6_content": "To provide you with the best service, this website will place and retrieve cookies on your computer. If you do not wish to accept cookies, you can set the privacy level in your browser to high to refuse cookie writing. However, this may cause some website functions to not operate normally.",
+      "7_title": "7. Amendments to the Privacy Protection Policy",
+      "7_content": "This website's privacy protection policy will be revised as needed, and revised terms will be published on the website. We will notify users through appropriate means when changes are made.",
+      "8_title": "8. Contact Channel",
+      "8_content": "For any questions about this website's privacy policy or to request changes or removal of personal data, please email us at: ooo@example.com."
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "1_title": "1. Accuracy and Completeness of Information",
+      "1_content": "All information on this website, including text, images, videos, audio, links, and other data, is provided for reference purposes only. Although we strive to ensure the accuracy of the information, we do not guarantee that all data is entirely accurate or up-to-date. We disclaim any liability for losses arising from any errors or omissions.",
+      "2_title": "2. Technical Operation and Security",
+      "2_content": "We will make every effort to ensure that the website operates technically without issues, but we cannot guarantee that the website is completely free from computer viruses, system failures, data loss, or other problems. If users suffer any damage (including but not limited to the aforementioned issues) while using this website, we will not assume any legal liability or compensation.",
+      "3_title": "3. User-Uploaded Content Responsibility",
+      "3_content": "Users are solely responsible for any images, videos, or other content they upload, as well as external links pointed to by shortened URLs generated through this website. This website does not assume responsibility for the legality, accuracy, or safety of such content. Users must ensure that their uploaded content does not infringe on others' rights and complies with relevant laws and regulations.",
+      "4_title": "4. Shortened URL Service Risks",
+      "4_content": "The shortened URL service provided by this website may encounter security risks, such as malware or phishing sites. Users should evaluate the risks before clicking on shortened URLs. Additionally, if the domain of the shortened URL service provider is reclaimed or the service is discontinued, all shortened URLs using that service may become invalid, causing marketing links to fail.",
+      "5_title": "5. Privacy Issues",
+      "5_content": "Some shortened URL services may collect users' click data, posing a threat to personal privacy. Users should be aware of this and decide whether to use such services accordingly.",
+      "6_title": "6. Copyright and Intellectual Property",
+      "6_content": "All content on this website, including text, images, videos, etc., is protected by relevant intellectual property laws. Without authorization, users are not permitted to reproduce, distribute, or use this content in any way.",
+      "7_title": "7. Governing Law",
+      "7_content": "This disclaimer is governed by and construed in accordance with the laws of [Republic of China]. Users agree to submit to the non-exclusive jurisdiction of the courts of [Republic of China].",
+      "8_title": "8. Disclaimer Updates",
+      "8_content": "We reserve the right to update this disclaimer at any time, and any changes will take effect immediately upon publication on this website. Users should review the latest disclaimer each time they visit the website. Continued use of this website implies acceptance of the updated disclaimer."
+    }
   }
 }
