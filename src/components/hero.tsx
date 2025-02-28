@@ -2,8 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { HeroLink } from "./heroLink";
 
-type Props = {};
-export const Hero: React.FC<Props> = async () => {
+export const Hero: React.FC = async () => {
   const t = await getTranslations("Header");
 
   //   const pathname = getPathN()
