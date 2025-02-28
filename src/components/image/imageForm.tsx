@@ -158,6 +158,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                   {field.state.meta.errors.length
                     ? field.state.meta.errors.map((error) => (
                         <em
+                          key={error?.toString()}
                           role="alert"
                           className="font-semibold text-sm text-red-500"
                         >
@@ -284,6 +285,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                   {field.state.meta.errors.length
                     ? field.state.meta.errors.map((error) => (
                         <em
+                          key={error?.toString()}
                           role="alert"
                           className="font-semibold text-sm text-red-500"
                         >
