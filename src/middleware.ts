@@ -24,15 +24,15 @@ export function middleware(request: NextRequest) {
 
   const url = request.nextUrl;
 
-  if (baseAuth) {
-    const authValue = baseAuth.split(" ")[1];
-    const [user, pwd] = atob(authValue).split(":");
+  // if (baseAuth) {
+  //   const authValue = baseAuth.split(" ")[1];
+  //   const [user, pwd] = atob(authValue).split(":");
 
-    if (user === "admin" && pwd === "yyds") {
-      return NextResponse.next();
-    }
-  }
-  url.pathname = "/api/auth";
+  //   if (user === "admin" && pwd === "yyds") {
+  //     return NextResponse.next();
+  //   }
+  // }
+  // url.pathname = "/api/auth";
 
   return NextResponse.rewrite(url);
 }
