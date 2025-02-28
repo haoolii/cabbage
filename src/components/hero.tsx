@@ -1,9 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Button } from "./ui/button";
 import { getTranslations } from "next-intl/server";
 import { HeroLink } from "./heroLink";
-// import { usePathname } from "next/navigation";
+
 type Props = {};
 export const Hero: React.FC<Props> = async () => {
   const t = await getTranslations("Header");

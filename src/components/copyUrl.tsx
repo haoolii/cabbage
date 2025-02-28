@@ -18,6 +18,7 @@ export const CopyUrl: React.FC<Props> = ({ url }) => {
         description: "複製成功",
       });
     } catch (error) {
+      console.error(error);
       toast({
         title: "錯誤",
         description: "複製失敗，請重試",

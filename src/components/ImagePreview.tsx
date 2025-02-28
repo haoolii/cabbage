@@ -24,6 +24,7 @@ export const ImagePreivew: React.FC<Props> = ({ assetKey, token }) => {
       setSrc(objectUrl);
       setLoading(false);
     } catch (err) {
+      console.error(err);
       setLoading(false);
     }
   };
