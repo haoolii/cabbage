@@ -1,15 +1,17 @@
 "use client";
 
-import { postGetRecordDetail } from "@/request/requests";
+import { postRecordPassword } from "@/request/requests";
 import { useState } from "react";
+import { Captcha } from "./captcha";
 type Props = {
     uniqueId: string;
 }
 export const PasswordInput: React.FC<Props> = ({ uniqueId }) => {
   const [password, setPassword] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
 
   const submit = async () => {
-    const json = await postGetRecordDetail(uniqueId, { password });
+    await postRecordPassword(uniqueId, { password, captchaToken });
   };
 
   return (
@@ -19,6 +21,9 @@ export const PasswordInput: React.FC<Props> = ({ uniqueId }) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      <Captcha onVerify={token => {
+          setCaptchaToken(token);
+      }} />
       <button onClick={() => submit()}>Submit</button>
     </div>
   );
