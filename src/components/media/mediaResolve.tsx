@@ -1,5 +1,4 @@
 import { Record } from "@/request/types";
-import { MediaShow } from "./mediaShow";
 import { MediaPreivew } from "../mediaPreview";
 import { useTranslations } from "next-intl";
 

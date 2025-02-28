@@ -4,9 +4,7 @@ import { ImageForm } from "@/components/image/imageForm";
 import { useState } from "react";
 import { ImageSuccess } from "./imageSuccess";
 
-type Props = {};
-
-export const ImageProcess: React.FC<Props> = () => {
+export const ImageProcess: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [uniqueId, setUniqueId] = useState<string>("");
  

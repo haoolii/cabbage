@@ -1,6 +1,5 @@
 import { Record } from "@/request/types";
 import { ImagePreivew } from "../ImagePreview";
-import { getRecordCount } from "@/request/requests";
 import { getTranslations } from "next-intl/server";
 
 type Props = {

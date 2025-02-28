@@ -1,5 +1,4 @@
 import { useForm, useStore } from "@tanstack/react-form";
-import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -29,7 +28,6 @@ type Props = {
 };
 
 export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
-  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<{
     files: FileWrapper[];
@@ -49,7 +47,6 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
     },
     onSubmit: async ({ value }) => {
       try {
-        setIsLoading(true);
         const postRecordJson = await postRecordMedia({
           files: value.files.map((f) => f.file),
           prompt: value.prompt,
@@ -63,8 +60,6 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
           postRecordJson.data.uniqueId
         );
       } catch (err) {
-      } finally {
-        setIsLoading(false);
       }
     },
     validators: {
@@ -137,7 +132,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
             <form.Field
               name="files"
               children={(field) => (
-                <label className="mb-4 h-28 bg-foreground/20 w-full rounded-xl flex flex-col justify-center items-center border-2 border-dashed border-foreground/50 cursor-pointer hover:opacity-80 transition">
+                <label key={"files"} className="mb-4 h-28 bg-foreground/20 w-full rounded-xl flex flex-col justify-center items-center border-2 border-dashed border-foreground/50 cursor-pointer hover:opacity-80 transition">
                   <span className="font-medium text-base text-primary-foreground/60">
                     {t("form.files.placeholder")}
                   </span>
@@ -176,7 +171,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
             <form.Field
               name="passwordRequired"
               children={(field) => (
-                <div className="flex justify-start w-full">
+                <div key={"passwordRequired"} className="flex justify-start w-full">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <Checkbox
                       checked={field.state.value}
@@ -197,7 +192,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
               <form.Field
                 name="password"
                 children={(field) => (
-                  <label className="flex flex-col w-full gap-2">
+                  <label key={"password"} className="flex flex-col w-full gap-2">
                     <div className="flex gap-2 items-center">
                       <span className="font-medium text-sm text-primary-foreground/60">
                         {t("form.password.label")}
@@ -228,7 +223,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
             <form.Field
               name="expireIn"
               children={(field) => (
-                <label className="flex flex-col w-full gap-2">
+                <label key={"expireIn"} className="flex flex-col w-full gap-2">
                   <span className="font-medium text-sm text-primary-foreground/60">
                     {t("form.expireIn.label")}
                   </span>
@@ -265,7 +260,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
             <form.Field
               name="prompt"
               children={(field) => (
-                <label className="flex flex-col w-full gap-2">
+                <label key={"prompt"} className="flex flex-col w-full gap-2">
                   <span className="font-medium text-sm text-primary-foreground/60">
                     {t("form.prompt.label")}
                   </span>
@@ -283,7 +278,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
             <form.Field
               name="captchToken"
               children={(field) => (
-                <div className="flex flex-col items-center gap-2">
+                <div key={"captchToken"} className="flex flex-col items-center gap-2">
                   <Captcha onVerify={(token) => field.handleChange(token)} />
                   {field.state.meta.errors.length
                     ? field.state.meta.errors.map((error) => (

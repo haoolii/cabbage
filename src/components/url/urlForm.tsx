@@ -65,7 +65,7 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
         <form.Field
           name="content"
           children={(field) => (
-            <div className="flex flex-col w-full items-center space-y-2">
+            <div key={"content"} className="flex flex-col w-full items-center space-y-2">
               <div className="h-6 flex justify-start">
                 {field.state.meta.errors.length
                   ? field.state.meta.errors.map((error) => (
@@ -92,7 +92,7 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
         <form.Field
           name="captchToken"
           children={(field) => (
-            <div className="flex flex-col items-center gap-2">
+            <div key={"captchToken"} className="flex flex-col items-center gap-2">
               <Captcha onVerify={(token) => field.handleChange(token)} />
               {field.state.meta.errors.length
                 ? field.state.meta.errors.map((error) => (

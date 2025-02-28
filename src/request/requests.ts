@@ -6,18 +6,16 @@ import {
   PostImageRecordBody,
   PostMediaRecordBody,
   PostRecordImageResponse,
-  PostRecordMediaResponse,
   PostRecordPasswordApiResponse,
   PostRecordPasswordBody,
   PostRecordUrlResponse,
 } from "./types";
 import { replacePathParams } from "./util";
-// import axios from 'axios';
 
 export const postAssetUpload = async (files: File[]) => {
   const formData = new FormData();
 
-  files.forEach((file, index) => {
+  files.forEach((file) => {
     formData.append("files", file);
   });
 
@@ -64,7 +62,7 @@ export const postRecordImage = async (body: PostImageRecordBody) => {
   formData.append("passwordRequired", `${body.passwordRequired}`);
   formData.append("captchaToken", `${body.captchaToken}`);
 
-  body.files?.forEach((file, index) => {
+  body.files?.forEach((file) => {
     formData.append("files", file);
   });
 
@@ -85,7 +83,7 @@ export const postRecordMedia = async (body: PostMediaRecordBody) => {
   formData.append("passwordRequired", `${body.passwordRequired}`);
   formData.append("captchaToken", `${body.captchaToken}`);
 
-  body.files?.forEach((file, index) => {
+  body.files?.forEach((file) => {
     formData.append("files", file);
   });
 

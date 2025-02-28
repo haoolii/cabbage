@@ -4,9 +4,7 @@ import { useState } from "react";
 import { MediaSuccess } from "./mediaSuccess";
 import { MediaForm } from "./mediaForm";
 
-type Props = {};
-
-export const MediaProcess: React.FC<Props> = () => {
+export const MediaProcess: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [uniqueId, setUniqueId] = useState<string>("");
 
