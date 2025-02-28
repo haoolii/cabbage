@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 //   return /^[a-zA-Z0-9]+$/.test(uniqueId);
 // }
 
-export async function middleware(request: NextRequest) {
+export async function middleware(/*request: NextRequest*/) {
   const response = NextResponse.next();
 
   // const uniqueId = request.nextUrl.pathname.slice(1);
