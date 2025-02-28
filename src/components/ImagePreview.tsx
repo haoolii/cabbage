@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
+import env from "@/core/env";
 
 type Props = {
   assetKey: string;
@@ -30,7 +31,7 @@ export const ImagePreivew: React.FC<Props> = ({ assetKey, token }) => {
   };
 
   useEffect(() => {
-    loadImage(`http://localhost:3000/o/${assetKey}`);
+    loadImage(`${env.CLIENT_API_BASE}/o/${assetKey}`);
   }, [assetKey]);
 
   return (

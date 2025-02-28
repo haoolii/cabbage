@@ -1,5 +1,6 @@
 "use client";
 
+import env from "@/core/env";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -26,7 +27,7 @@ export const MediaPreivew: React.FC<Props> = ({ assetKey, token }) => {
   };
 
   useEffect(() => {
-    loadImage(`http://localhost:3000/o/${assetKey}`);
+    loadImage(`${env.CLIENT_API_BASE}/o/${assetKey}`);
     // console.log('')
   }, [assetKey]);
 
