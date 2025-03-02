@@ -27,8 +27,7 @@ export const MediaPreivew: React.FC<Props> = ({ assetKey, token }) => {
   };
 
   useEffect(() => {
-    loadImage(`${env.CLIENT_API_BASE}/o/${assetKey}`);
-    // console.log('')
+      loadImage(`${env.ASSET_BASE}/${assetKey}`);
   }, [assetKey]);
 
   return (

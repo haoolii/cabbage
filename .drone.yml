@@ -1,0 +1,58 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  # 前置準備
+  - name: upload-to-server
+    image: alpine:latest
+    environment:
+      SERVER_IP: ${SERVER_IP}
+    commands:
+      - apk update && apk add --no-cache openssh
+
+      - echo "$SERVER_IP"
+
+      - chmod 600 ./id_rsa_linode
+
+      # 刪除舊專案資料夾
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP 'rm -rf /root/cabbage-app-deploy'
+
+      # 建立新專案資料夾
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP 'mkdir -p /root/cabbage-app-deploy'
+
+      # 傳送專案檔案和 .env 到遠端主機
+      - scp -o StrictHostKeyChecking=no -i ./id_rsa_linode ./cabbage-app.tar.gz ./.env root@$SERVER_IP:/root/cabbage-app-deploy/
+
+  # clear old docker image
+  - name: clear-docker-image
+    image: alpine:latest
+    environment:
+      SERVER_IP: ${SERVER_IP}
+    commands:
+      - apk update && apk add --no-cache openssh
+      # 停止舊的容器（如果存在）
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP 'docker stop cabbage-app-container || true'
+
+      # 刪除舊的容器
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP 'docker rm cabbage-app-container || true'
+
+      # 刪除舊映像
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP "docker rmi cabbage-app:latest || true"
+
+  # load docker image and start
+  - name: load-docker-image
+    image: alpine:latest
+    environment:
+      SERVER_IP: ${SERVER_IP}
+    commands:
+      - apk update && apk add --no-cache openssh
+
+      # 加載新的 Docker 映像
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP "docker load -i /root/cabbage-app-deploy/cabbage-app.tar.gz"
+
+      # 確認映像已經成功加載
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP "docker images"
+
+      # 啟動新的容器
+      - ssh -o StrictHostKeyChecking=no -i ./id_rsa_linode root@$SERVER_IP "docker run -d --name cabbage-app-container --env-file /root/cabbage-app-deploy/.env -p 8877:8877 --network 1panel-network cabbage-app:latest"

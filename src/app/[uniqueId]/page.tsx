@@ -19,11 +19,10 @@ export default async function UniqueId({
 
     const getRecordDetailJson = await getRecordDetail(
       uniqueId,
-      cookie.get("Authorization")?.value
+      cookie.get("Authorization")?.value || ""
     );
 
     const countJson = await getRecordCount(uniqueId);
-
 
     const type = getRecordDetailJson?.data?.record?.type;
 
@@ -36,9 +35,11 @@ export default async function UniqueId({
 
     // expired or not exist
     if (!getRecordDetailJson?.data) {
-      return <>
-        <ExpiredNotFound />
-      </>
+      return (
+        <>
+          <ExpiredNotFound />
+        </>
+      );
     }
 
     // 並非 private 且需要密碼
@@ -87,6 +88,8 @@ export default async function UniqueId({
       throw err;
     }
 
-    return <></>;
+    return (
+      <h1>Error</h1>
+    );
   }
 }

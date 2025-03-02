@@ -29,11 +29,7 @@ export const Header = () => {
     {
       label: "links.shortenMediaLink",
       value: "/media",
-    },
-    {
-      label: "links.policyLink",
-      value: "/policy",
-    },
+    }
   ];
 
   return (

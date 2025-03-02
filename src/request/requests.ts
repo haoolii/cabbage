@@ -1,4 +1,4 @@
-import { api } from "./endpoint";
+import { api, containerApi } from "./endpoint";
 import {
   GetRecordApiResponse,
   GetRecordCountApiResponse,
@@ -97,7 +97,8 @@ export const postRecordMedia = async (body: PostMediaRecordBody) => {
 };
 
 export const getRecordDetail = async (uniqueId: string, token?: string) => {
-  const url = replacePathParams(api.getQueryRecord, { uniqueId });
+  // TODO: 調整containerAPI & api 差異
+  const url = replacePathParams(containerApi.getQueryRecord, { uniqueId });
   const response = await fetch(url, {
     method: "GET",
     headers: token
@@ -113,7 +114,8 @@ export const getRecordDetail = async (uniqueId: string, token?: string) => {
 };
 
 export const getRecordCount = async (uniqueId: string) => {
-  const url = replacePathParams(api.getQueryRecordCount, { uniqueId });
+  // TODO: 調整containerAPI & api 差異
+  const url = replacePathParams(containerApi.getQueryRecordCount, { uniqueId });
   const response = await fetch(url, {
     method: "GET",
   });

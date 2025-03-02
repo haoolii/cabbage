@@ -1,7 +1,7 @@
 import env from "@/core/env";
 import { createApi } from "./util";
 
-const base = `${env.CLIENT_API_BASE}/d`;
+const base = `${env.SERVER_API_BASE}/api`;
 
 const paths = {
   postAssetUpload: "/asset/upload",
@@ -14,3 +14,7 @@ const paths = {
 };
 
 export const api = createApi(paths, base);
+
+const containerBase = `${env.SERVER_API_CONTAINER_BASE}/api`;
+
+export const containerApi = createApi(paths, containerBase);

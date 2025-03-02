@@ -3,14 +3,15 @@
     "title": "Hello world!"
   },
   "Global": {
-    "title": "",
-    "description": "",
+    "title": "Beurl URL Shortener, Video Compressor, Image Compressor, Upload Images, Upload Videos, Upload Photos",
+    "description": "Beurl offers features for uploading and sharing 'compressed images,' 'compressed videos,' and 'audio files,' combined with a 'URL shortening' service. It’s a free, secure, and privacy-focused anonymous upload SPACE. With a simple interface, you can easily create short URLs, share images, videos, and audio, making social media sharing more convenient! Supports password protection for photos, videos, and images.",
     "1min": "1 minute",
     "5min": "5 minutes",
     "30min": "30 minutes",
     "1hour": "1 hour",
     "6hour": "6 hours",
     "12hour": "12 hours",
+    "1day": "1 day",
     "3day": "3 day",
     "7day": "7 days",
     "10day": "10 days",
@@ -28,6 +29,15 @@
       "english": "English",
       "chinese": "Chinese"
     }
+  },
+  "Footer": {
+    "about": "About",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "sitemap": "Sitemap",
+    "disclaimer": "Disclaimer",
+    "termsOfService": "Terms of Service",
+    "allRightsReserved": "All rights reserved"
   },
   "UrlPage": {
     "title": "The safest, fastest, most convenient, and free URL shortening service",
@@ -190,6 +200,31 @@
       "7_content": "This disclaimer is governed by and construed in accordance with the laws of [Republic of China]. Users agree to submit to the non-exclusive jurisdiction of the courts of [Republic of China].",
       "8_title": "8. Disclaimer Updates",
       "8_content": "We reserve the right to update this disclaimer at any time, and any changes will take effect immediately upon publication on this website. Users should review the latest disclaimer each time they visit the website. Continued use of this website implies acceptance of the updated disclaimer."
+    },
+    "termsOfService": {
+      "title": "Terms of Service",
+      "1_title": "1. Acceptance of Terms",
+      "1_content": "Welcome to [Your Website Name] (hereinafter referred to as 'the Website'). By using the Website, you (hereinafter referred to as 'User') agree to comply with these Terms of Service (hereinafter referred to as 'the Terms') and all applicable laws and regulations. If you do not agree to these Terms, please do not use the Website. We reserve the right to modify these Terms at any time, and such modifications will take effect immediately upon posting on the Website. Continued use of the Website constitutes your acceptance of the updated Terms.",
+      "2_title": "2. Service Description",
+      "2_content": "The Website provides online services including, but not limited to, URL shortening, sharing of user-uploaded content (text, images, videos, etc.), and other related features. We reserve the right to adjust, suspend, or terminate any or all parts of the services at any time without prior notice and shall not be liable for any resulting losses.",
+      "3_title": "3. Eligibility",
+      "3_content": "Users must be at least [insert appropriate age, e.g., 13 or 18] years old or have the consent of a legal guardian to use the Website.\nUsers are solely responsible for ensuring that their use of the Website complies with the laws and regulations of their respective jurisdictions.",
+      "4_title": "4. User Obligations and Conduct",
+      "4_content": "Content Responsibility: Users are solely responsible for the legality, accuracy, and safety of any content they upload or generate through the Website (including external links pointed to by shortened URLs). The Website bears no responsibility for user-generated content.\nProhibited Actions: Users must not:\nUpload or share content that is illegal, infringing, obscene, defamatory, or otherwise inappropriate.\nUse the Website for malicious activities, including but not limited to distributing viruses, phishing sites, or scams.\nAbuse the Website’s services (e.g., generating large volumes of meaningless shortened URLs that disrupt system operations).\n\nIf a User violates these rules, we reserve the right to suspend or terminate their access to the services at our discretion and pursue legal action if necessary.",
+      "5_title": "5. URL Shortening Service Provisions",
+      "5_content": "The URL shortening service provided by the Website is a convenience tool. Users are responsible for assessing the risks of clicking or sharing shortened URLs.\nWe do not guarantee the long-term functionality of shortened URLs. If the domain of the service provider is reclaimed, discontinued, or affected by force majeure, resulting in URL失效 (invalidation), we bear no responsibility.\nUsers should be aware that some shortened URLs may be used by third parties to collect data, and the Website is not liable for such actions.",
+      "6_title": "6. Intellectual Property Rights",
+      "6_content": "Website Content: All original content on the Website (including text, images, designs, etc.) is protected by the intellectual property laws of the Republic of China (ROC). Unauthorized reproduction, duplication, or use in any form is prohibited.\nUser Content: Content uploaded by Users remains the property of the User or their rightful licensors. By uploading content, Users grant the Website a non-exclusive, transferable license to store, display, or process such content to provide the services.",
+      "7_title": "7. Limitation of Liability",
+      "7_content": "The Website strives to provide reliable services but does not guarantee that the services will be uninterrupted, error-free, or free from security risks. We are not liable for losses caused by system failures, viruses, or other technical issues.\nThe Website is not responsible for any direct or indirect damages incurred by Users from using the Website or its content (including shortened URLs). For more details, refer to our 'Disclaimer.'",
+      "8_title": "8. Termination of Service",
+      "8_content": "We reserve the right to terminate or restrict a User’s access to the Website at any time, for any reason (including but not limited to violation of these Terms), without prior notice.\nUsers may cease using the Website at any time. Upon cessation, provisions related to limitation of liability, intellectual property rights, and legal jurisdiction in these Terms remain in effect.",
+      "9_title": "9. Privacy Protection",
+      "9_content": "Users’ personal data will be handled in accordance with the Website’s 'Privacy Policy.' Please refer to that policy for details on how we collect, use, and protect your information.",
+      "10_title": "10. Governing Law",
+      "10_content": "These Terms are governed by and construed in accordance with the laws of the Republic of China (ROC). In the event of a dispute, Users agree to submit to the non-exclusive jurisdiction of the courts of the Republic of China.",
+      "11_title": "11. Contact Us",
+      "11_content": "If you have any questions regarding these Terms, please contact us at [your contact information, e.g., email address]."
     }
   }
 }

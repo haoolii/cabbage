@@ -20,7 +20,7 @@ export const UrlSuccess: React.FC<Props> = ({ uniqueId, onReset }) => {
         <CopyUrl url={uniqueIdUrl} />
       </div>
       <Button onClick={() => onReset()} className="w-44 rounded-2xl">
-        {t("continueUploading")}
+        {t("continueShortening")}
       </Button>
     </div>
   );

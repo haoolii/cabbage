@@ -31,9 +31,9 @@ export const ImagePreivew: React.FC<Props> = ({ assetKey, token }) => {
   };
 
   useEffect(() => {
-    loadImage(`${env.CLIENT_API_BASE}/o/${assetKey}`);
+    loadImage(`${env.ASSET_BASE}/${assetKey}`);
   }, [assetKey]);
-
+  
   return (
     <div>
       {loading ? (

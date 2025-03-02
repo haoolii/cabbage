@@ -46,7 +46,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
       passwordRequired: false,
       password: "",
       prompt: "",
-      expireIn: "60",
+      expireIn: `${60 * 60 * 24}`,
       captchToken: "",
     },
     onSubmit: async ({ value }) => {
