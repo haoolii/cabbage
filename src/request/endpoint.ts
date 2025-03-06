@@ -4,7 +4,6 @@ import { createApi } from "./util";
 const base = `${env.SERVER_API_BASE}/api`;
 
 const paths = {
-  postAssetUpload: "/asset/upload",
   postRecordUrl: "/record/url",
   postRecordImage: "/record/image",
   postRecordMedia: "/record/media",

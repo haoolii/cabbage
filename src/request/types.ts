@@ -4,10 +4,6 @@ export type ApiResponse<T> = {
   code: string;
 };
 
-export type PostAssetUploadResponse = ApiResponse<{
-  assetIds: string[];
-}>;
-
 export type PostRecordImageResponse = ApiResponse<{
   uniqueId: string;
 }>;

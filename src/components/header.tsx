@@ -34,15 +34,17 @@ export const Header = () => {
 
   return (
     <>
-      <header className="max-w-5xl w-full mx-auto flex items-center gap-x-2 p-2 pt-4">
-        <Link href={"/"} className="w-28 h-12 flex justify-center items-center">
-          <Image src="/logo.svg" alt="logo" width={110} height={45} />
-          {/* BeUrl */}
+      <header className="max-w-5xl w-full mx-auto flex items-center gap-x-2 p-4">
+        <Link href={"/"} className="justify-center items-center flex md:hidden">
+          <img src="/logo.svg" alt="logo" className="h-8" />
+          <h1 className="font-semibold -mb-1">
+            {'BeURL'}
+          </h1>
         </Link>
         <nav className="gap-2 hidden md:flex">
           {links.map((link) => (
             <Link key={link.value} href={link.value}>
-              <Button variant="ghost">{t(link.label)}</Button>
+              <Button variant="ghost" className="font-semibold">{t(link.label)}</Button>
             </Link>
           ))}
         </nav>

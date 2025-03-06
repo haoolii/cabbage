@@ -2,7 +2,6 @@ import { api, containerApi } from "./endpoint";
 import {
   GetRecordApiResponse,
   GetRecordCountApiResponse,
-  PostAssetUploadResponse,
   PostImageRecordBody,
   PostMediaRecordBody,
   PostRecordImageResponse,
@@ -11,22 +10,6 @@ import {
   PostRecordUrlResponse,
 } from "./types";
 import { replacePathParams } from "./util";
-
-export const postAssetUpload = async (files: File[]) => {
-  const formData = new FormData();
-
-  files.forEach((file) => {
-    formData.append("files", file);
-  });
-
-  const response = await fetch(api.postAssetUpload, {
-    method: "POST",
-    body: formData,
-  });
-  const json = (await response.json()) as PostAssetUploadResponse;
-
-  return json;
-};
 
 export const postRecordUrl = async ({
   content,
