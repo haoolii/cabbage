@@ -1,5 +1,5 @@
 import { Record } from "@/request/types";
-import { ImagePreivew } from "../ImagePreview";
+import { ImageAuthPreview } from "../imageAuthPreview";
 import { getTranslations } from "next-intl/server";
 
 type Props = {
@@ -14,7 +14,7 @@ export const ImageResolve: React.FC<Props> = async ({ record, token, count }) =>
 
   return (
     <div className="w-full flex justify-center py-10">
-      <div className="w-full max-w-xl flex flex-col gap-6 px-4 items-center">
+      <div className="w-full max-w-4xl flex flex-col gap-6 px-4 items-center">
         <span className="font-medium text-sm text-primary-foreground/60">
           {t("promptText")}: {record.prompt || t("none")}
         </span>
@@ -24,7 +24,7 @@ export const ImageResolve: React.FC<Props> = async ({ record, token, count }) =>
         <div>
           {(record?.assets || []).map((asset) => {
             return (
-              <ImagePreivew
+              <ImageAuthPreview
                 key={asset.key}
                 assetKey={asset.key}
                 token={token}

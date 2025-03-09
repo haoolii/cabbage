@@ -1,4 +1,26 @@
-import { useForm, useStore } from "@tanstack/react-form";
+"use client";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+// types
+import { FileWrapper } from "@/types";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// components
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { UploadButton } from "../uploadButton";
+import { Switch } from "../ui/switch";
+import { Captcha } from "../captcha";
 import {
   Select,
   SelectContent,
@@ -6,311 +28,261 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { postRecordMedia } from "@/request/requests";
-import { v4 as uuid } from "uuid";
-import { MediaShow } from "./mediaShow";
-import { useTranslations } from "next-intl";
+
+// hooks
 import { useExpireTimes } from "@/hooks/useExpireTimes";
-import { Captcha } from "../captcha";
+
+// requests
+import { postRecordMedia } from "@/request/requests";
+
+// utils
+import { isSuccess } from "@/request/util";
+import { MediaControl } from "../mediaControl";
+
+type Props = {
+  onSuccess?: (files: FileWrapper[], uniqueId: string) => void;
+};
 
 const allowedFileTypes = [".mp3", ".mp4"];
 
-type FileWrapper = {
-  file: File;
-  id: string;
-};
-
-type Props = {
-  onSuccess?: (files: File[], uniqueId: string) => void;
-};
-
 export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
+  const t = useTranslations("MediaPage");
+  const expireTimes = useExpireTimes();
 
-  const form = useForm<{
-    files: FileWrapper[];
-    passwordRequired: boolean;
-    password: string;
-    prompt: string;
-    expireIn: number;
-    captchToken: string;
-  }>({
+  const formSchema = z
+    .object({
+      files: z
+        .array(z.custom<FileWrapper>())
+        .refine((files) => files.length > 0, {
+          message: t("form.files.errors.required"),
+        }),
+      passwordRequired: z.boolean(),
+      password: z.string().optional(),
+      prompt: z.string(),
+      expireIn: z.string(),
+      captchToken: z.string().nonempty(t("form.captchaToken.errors.required")),
+    })
+    .refine(
+      (data) => {
+        if (data.passwordRequired && !data.password) {
+          return false;
+        }
+        return true;
+      },
+      {
+        message: t("form.password.errors.required"),
+        path: ["password"],
+      }
+    );
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       files: [],
       passwordRequired: false,
       password: "",
       prompt: "",
-      expireIn: 60,
-      captchToken: ""
-    },
-    onSubmit: async ({ value }) => {
-      try {
-        const postRecordJson = await postRecordMedia({
-          files: value.files.map((f) => f.file),
-          prompt: value.prompt,
-          passwordRequired: value.passwordRequired,
-          password: value.passwordRequired ? value.password : "",
-          expireIn: value.expireIn,
-          captchaToken: value.captchToken
-        });
-        onSuccess(
-          value.files.map((f) => f.file),
-          postRecordJson.data.uniqueId
-        );
-      } catch (err) {
-      }
-    },
-    validators: {
-      onSubmit: (v) => {
-        return {
-          fields: {
-            password:
-              v.value.passwordRequired && !v.value.password.length
-                ? "form.password.errors.required"
-                : undefined,
-            files: !v.value.files.length
-              ? "form.files.errors.required"
-              : undefined,
-            captchToken: !v.value.captchToken
-              ? "form.captchaToken.errors.required"
-              : undefined,
-          },
-        };
-      },
+      expireIn: `${60 * 60 * 24}`,
+      captchToken: "",
     },
   });
 
-  const passwordRequired = useStore(
-    form.store,
-    (state) => state.values.passwordRequired
-  );
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const postRecordJson = await postRecordMedia({
+      prompt: values.prompt,
+      passwordRequired: values.passwordRequired,
+      password: values.passwordRequired ? values.password : "",
+      expireIn: +values.expireIn,
+      files: values.files.map((f) => f.file),
+      captchaToken: values.captchToken,
+    });
 
-  const files = useStore(form.store, (state) => state.values.files);
+    if (isSuccess(postRecordJson)) {
+      onSuccess(values.files, postRecordJson.data.uniqueId);
+    }
+  }
 
-  const onRemove = (id: string) => {
-    form.setFieldValue(
-      "files",
-      files.filter((f) => f.id !== id)
-    );
-  };
+  const files = form.watch("files");
 
-  const t = useTranslations("MediaPage");
-
-  const expireTimes = useExpireTimes();
+  const passwordRequired = form.getValues("passwordRequired");
 
   return (
-    <div className="w-full">
-      <form
-        className="flex flex-col items-center"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          await form.validateAllFields("submit");
-          form.handleSubmit();
-        }}
-      >
-        <div
-          className={`grid ${
-            files.length > 1 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
-          } gap-4 pb-8`}
-        >
-          {files.map((file) => (
-            <div key={file.id}>
-              <MediaShow
-                file={file.file}
-                onRemove={() => {
-                  onRemove(file.id);
-                }}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="w-full max-w-xl flex flex-col gap-6 items-center">
-          <div className="flex flex-col gap-4 w-full">
-            <form.Field
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12  space-y-8">
+            <FormField
+              control={form.control}
               name="files"
-              children={(field) => (
-                <label key={"files"} className="mb-4 h-28 bg-foreground/20 w-full rounded-xl flex flex-col justify-center items-center border-2 border-dashed border-foreground/50 cursor-pointer hover:opacity-80 transition">
-                  <span className="font-medium text-base text-primary-foreground/60">
-                    {t("form.files.placeholder")}
-                  </span>
-                  <input
-                    onChange={(e) => {
-                      if (e.target.files) {
-                        const files = [...e.target.files];
-                        field.handleChange([
-                          ...field.state.value,
-                          ...files.map((f) => ({
-                            file: f,
-                            id: uuid(),
-                          })),
-                        ]);
-                        e.target.value = "";
-                      }
-                    }}
-                    type="file"
-                    hidden
-                    accept={allowedFileTypes.join(",")}
-                    multiple
-                  />
-                  {field.state.meta.errors.length
-                    ? field.state.meta.errors.map((error) => (
-                        <em
-                          key={error?.toString()}
-                          role="alert"
-                          className="font-semibold text-sm text-red-500"
-                        >
-                          * {t(error)}
-                        </em>
-                      ))
-                    : null}
-                </label>
-              )}
-            />
-            <form.Field
-              name="passwordRequired"
-              children={(field) => (
-                <div key={"passwordRequired"} className="flex justify-start w-full">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <Checkbox
-                      checked={field.state.value}
-                      onCheckedChange={(e) => {
-                        if (typeof e === "boolean") {
-                          field.handleChange(e);
-                        }
-                      }}
-                    />
-                    <span className="-mb-0.5 font-medium text-sm">
-                      {t("form.passwordRequired.label")}
-                    </span>
-                  </label>
-                </div>
-              )}
-            />
-            {passwordRequired && (
-              <form.Field
-                name="password"
-                children={(field) => (
-                  <label key={"password"} className="flex flex-col w-full gap-2">
-                    <div className="flex gap-2 items-center">
-                      <span className="font-medium text-sm text-primary-foreground/60">
-                        {t("form.password.label")}
-                      </span>
-                      {field.state.meta.errors.length
-                        ? field.state.meta.errors.map((error) => (
-                            <em
-                              key={error?.toString()}
-                              role="alert"
-                              className="font-semibold text-sm text-red-500"
-                            >
-                              * {t(error)}
-                            </em>
-                          ))
-                        : null}
-                    </div>
-                    <Input
-                      placeholder={t("form.password.placeholder")}
-                      className="bg-primary-foreground text-black rounded-2xl"
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                  </label>
-                )}
-              />
-            )}
-            <form.Field
-              name="expireIn"
-              children={(field) => (
-                <label key={"expireIn"} className="flex flex-col w-full gap-2">
-                  <span className="font-medium text-sm text-primary-foreground/60">
-                    {t("form.expireIn.label")}
-                  </span>
-                  <Select
-                    name={field.name}
-                    value={
-                      field.state.value ? `${field.state.value}` : undefined
-                    }
-                    onValueChange={(v) => {
-                      field.handleChange(Number(v));
-                    }}
+              render={({ field }) => (
+                <>
+                  <FormItem>
+                    <FormControl>
+                      <UploadButton
+                        accept={allowedFileTypes.join(",")}
+                        onChange={(files) => {
+                          field.onChange([...field.value, ...files]);
+                        }}
+                      >
+                        上傳影片或音訊
+                      </UploadButton>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                  <div
+                    className={`grid ${
+                      files.length > 1
+                        ? "grid-cols-1 sm:grid-cols-1"
+                        : "grid-cols-1"
+                    } gap-8`}
                   >
-                    <SelectTrigger className="bg-primary-foreground rounded-2xl text-black">
-                      <SelectValue
-                        className="text-black/40"
-                        placeholder={t("form.expireIn.placeholder")}
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="bg-primary-foreground text-black rounded-2xl">
-                      {expireTimes.map((expire) => (
-                        <SelectItem
-                          key={expire.value}
-                          className="rounded-xl"
-                          value={`${expire.value}`}
-                        >
-                          {expire.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </label>
-              )}
-            />
-            <form.Field
-              name="prompt"
-              children={(field) => (
-                <label key={"prompt"} className="flex flex-col w-full gap-2">
-                  <span className="font-medium text-sm text-primary-foreground/60">
-                    {t("form.prompt.label")}
-                  </span>
-                  <Input
-                    className="bg-primary-foreground text-black rounded-2xl"
-                    placeholder={t("form.prompt.placeholder")}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </label>
-              )}
-            />
-            <form.Field
-              name="captchToken"
-              children={(field) => (
-                <div key={"captchToken"} className="flex flex-col items-center gap-2">
-                  <Captcha onVerify={(token) => field.handleChange(token)} />
-                  {field.state.meta.errors.length
-                    ? field.state.meta.errors.map((error) => (
-                        <em
-                          key={error?.toString()}
-                          role="alert"
-                          className="font-semibold text-sm text-red-500"
-                        >
-                          * {t(error)}
-                        </em>
-                      ))
-                    : null}
-                </div>
+                    {files.map((file) => (
+                      <div
+                        key={file.id}
+                        className="flex justify-center items-center"
+                      >
+                        <MediaControl
+                          file={file}
+                          onDelete={(id) => {
+                            form.setValue(
+                              "files",
+                              files.filter((f) => f.id !== id)
+                            );
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
             />
           </div>
-          <form.Subscribe
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => (
+          <div className="col-span-12">
+            <div className="space-y-4 sticky top-0 z-10">
+              <FormField
+                control={form.control}
+                name="passwordRequired"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>{t("form.passwordRequired.label")}</FormLabel>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {passwordRequired && (
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>{t("form.password.label")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder={t("form.password.placeholder")}
+                          className="bg-primary-foreground text-black"
+                          name={field.name}
+                          value={field.value}
+                          onBlur={field.onBlur}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              <FormField
+                control={form.control}
+                name="expireIn"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>{t("form.expireIn.label")}</FormLabel>
+                    <FormControl>
+                      <Select
+                        name={field.name}
+                        value={field.value ? `${field.value}` : undefined}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="bg-primary-foreground text-black">
+                          <SelectValue
+                            className="text-black/40"
+                            placeholder={t("form.expireIn.placeholder")}
+                          />
+                        </SelectTrigger>
+                        <SelectContent className="bg-primary-foreground text-black">
+                          {expireTimes.map((expire) => (
+                            <SelectItem
+                              key={expire.value}
+                              value={`${expire.value}`}
+                            >
+                              {expire.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="prompt"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>{t("form.prompt.label")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={t("form.prompt.placeholder")}
+                        className="bg-primary-foreground text-black"
+                        name={field.name}
+                        value={field.value}
+                        onBlur={field.onBlur}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="captchToken"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Captcha onVerify={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Button
+                disabled={form.formState.isSubmitting}
+                key={"submit"}
                 type="submit"
-                disabled={isSubmitting}
-                className="w-44 rounded-2xl"
+                className="w-full"
               >
-                {isSubmitting ? t("form.submitting") : t("form.submit")}
+                {form.formState.isSubmitting
+                  ? t("form.submitting")
+                  : t("form.submit")}
               </Button>
-            )}
-          />
+            </div>
+          </div>
         </div>
       </form>
-    </div>
+    </Form>
   );
 };

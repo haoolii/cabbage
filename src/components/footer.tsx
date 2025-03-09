@@ -6,10 +6,10 @@ export const Footer: React.FC = async () => {
   const t = await getTranslations("Footer");
 
   return (
-    <footer className="w-full  py-6 text-center text-sm text-primary-foreground ">
+    <footer className="w-full py-6 text-center text-sm text-primary ">
       <div className="max-w-4xl mx-auto space-y-4">
         <div>version: {env.VERSION || "-"}</div>
-        <nav className="flex justify-center space-x-4">
+        <nav className="flex flex-col sm:flex-row justify-center gap-4">
           <Link href={"/about"} className="hover:underline">
             {t("about")}
           </Link>

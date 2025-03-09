@@ -4,10 +4,10 @@ import { Header } from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import { Montserrat } from "next/font/google";
+import { Noto_Sans_TC } from "next/font/google";
 import { Footer } from "@/components/footer";
 
-const montserrat = Montserrat({ subsets: ["latin"] });
+const fontTC = Noto_Sans_TC({ weight: ["100", "200", "300", "400", "500", "600"], subsets: ['latin'] });
 
 export async function generateMetadata(
   { params: { locale } }: { params: { locale: string } },
@@ -75,14 +75,17 @@ export default async function RootLayout({
   const messages = await getMessages();
   return (
     <html lang={locale}>
-      <body className={`${montserrat.className} antialiased dark`}>
+      <body className={`${fontTC.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <>
-            <Header />
-            <div className="min-h-[80vh]">{children}</div>
-            <Toaster />
-            <Footer />
-          </>
+            <div vaul-drawer-wrapper="">
+              <div className="bg-primary-foreground">
+                <Header />
+                <div className="min-h-dvh">{children}</div>
+                <Toaster />
+                <div className="h-16 sm:hidden"></div>
+                <Footer />
+              </div>
+            </div>
         </NextIntlClientProvider>
       </body>
     </html>

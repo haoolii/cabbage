@@ -2,12 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
-import { ImageShow } from "./imageShow";
 import { CopyUrl } from "../copyUrl";
 import env from "@/core/env";
+import { FileWrapper } from "@/types";
+import { ImagePreview } from "../ImagePreview";
 
 type Props = {
-  files: File[];
+  files: FileWrapper[];
   uniqueId: string;
   onReset: () => void;
 };
@@ -22,8 +23,8 @@ export const ImageSuccess: React.FC<Props> = ({ files, uniqueId, onReset }) => {
         <h2 className="font-bold text-3xl">{t("successPrompt")}</h2>
       </div>
       {files.map((file) => (
-        <div key={file.name}>
-          <ImageShow file={file} />
+        <div key={file.id}>
+            <ImagePreview file={file} />
         </div>
       ))}
 

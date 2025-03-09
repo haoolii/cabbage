@@ -63,6 +63,7 @@ export default async function UniqueId({
           <MediaResolve
             record={getRecordDetailJson?.data?.record}
             token={getRecordDetailJson.data.token}
+            count={countJson.data.count || 0}
           />
         </>
       );

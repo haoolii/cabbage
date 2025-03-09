@@ -1,15 +1,17 @@
 "use client";
 
-import { ImageForm } from "@/components/image/imageForm";
+
 import { useState } from "react";
 import { ImageSuccess } from "./imageSuccess";
+import { ImageForm } from "./imageForm";
+import { FileWrapper } from "@/types";
 
 export const ImageProcess: React.FC = () => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileWrapper[]>([]);
   const [uniqueId, setUniqueId] = useState<string>("");
  
   return (
-    <div className="w-full flex justify-center">
+    <div className="">
       {!uniqueId ? (
         <ImageForm
           onSuccess={(files, uniqueId) => {

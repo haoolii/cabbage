@@ -5,9 +5,10 @@ import { Button } from "./ui/button";
 
 type Props = {
   file: FileWrapper;
+  onDelete?: (id: string) => void;
 };
 
-export const MediaPreview: React.FC<Props> = ({ file }) => {
+export const MediaControl: React.FC<Props> = ({ file, onDelete = () => {} }) => {
   const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
@@ -20,7 +21,15 @@ export const MediaPreview: React.FC<Props> = ({ file }) => {
 
   return (
     <div className="relative w-full">
+      <Button
+        size="icon"
+        className=" w-6 h-6 rounded-full absolute -right-3 -top-3"
+        onClick={() => onDelete(file.id)}
+      >
+        <Cross1Icon width={24} height={24} />
+      </Button>
       <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
+        {/* <img className="max-w-full" src={src} /> */}
         <video controls className="max-w-full">
           <source src={src} type="video/mp4" />
           <source src={src} type="audio/mpeg" />

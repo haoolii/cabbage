@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { MediaSuccess } from "./mediaSuccess";
 import { MediaForm } from "./mediaForm";
+import { FileWrapper } from "@/types";
 
 export const MediaProcess: React.FC = () => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileWrapper[]>([]);
   const [uniqueId, setUniqueId] = useState<string>("");
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="">
       {!uniqueId ? (
         <MediaForm
           onSuccess={(files, uniqueId) => {

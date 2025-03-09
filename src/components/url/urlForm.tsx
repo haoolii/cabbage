@@ -53,6 +53,9 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
 
   return (
     <div className="w-full">
+      <Button onClick={() => 
+        errorCodeToast("0")
+      }>test</Button>
       <form
         className="w-full flex flex-col items-center gap-6"
         onSubmit={async (e) => {

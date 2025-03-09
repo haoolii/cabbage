@@ -1,11 +1,12 @@
 import env from "@/core/env";
 import { useTranslations } from "next-intl";
-import { MediaShow } from "./mediaShow";
 import { Button } from "../ui/button";
 import { CopyUrl } from "../copyUrl";
+import { MediaPreview } from "../mediaPreview";
+import { FileWrapper } from "@/types";
 
 type Props = {
-  files: File[];
+  files: FileWrapper[];
   uniqueId: string;
   onReset: () => void;
 };
@@ -21,8 +22,8 @@ export const MediaSuccess: React.FC<Props> = ({ files, uniqueId, onReset }) => {
         <h2 className="font-bold text-3xl">{t("successPrompt")}</h2>
       </div>
       {files.map((file) => (
-        <div key={file.name}>
-          <MediaShow file={file} />
+        <div key={file.id}>
+          <MediaPreview file={file} />
         </div>
       ))}
 
