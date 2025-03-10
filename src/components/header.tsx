@@ -37,11 +37,11 @@ export const Header = () => {
   return (
     <div>
       <header className="max-w-5xl w-full mx-auto flex items-center gap-x-2 p-4">
-        <Link href={"/"} className="justify-center items-center flex md:hidden">
+        <Link href={"/"} className="justify-center items-center flex mr-4">
           <img src="/logo.svg" alt="logo" className="h-8" />
           <h1 className="font-semibold -mb-1">{"BeURL"}</h1>
         </Link>
-        <nav className="gap-2 hidden md:flex">
+        <nav className="gap-2 hidden md:flex -mb-1">
           {links.map((link) => (
             <Link key={link.value} href={link.value}>
               <Button variant="ghost" className="font-semibold">
@@ -51,9 +51,6 @@ export const Header = () => {
           ))}
         </nav>
         <div className="flex-1"></div>
-        <div className="hidden md:inline-block">
-          <Language />
-        </div>
         <div >
           <Nav />
         </div>

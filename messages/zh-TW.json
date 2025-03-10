@@ -16,14 +16,20 @@
     "7day": "7 天",
     "10day": "10 天",
     "30day": "30 天",
-    "Unlimited": "無期限"
+    "Unlimited": "無期限",
+    "expiredOrNotFound": "不存在或是已經過期",
+    "Chinese": "中文",
+    "English": "英文"
   },
   "Header": {
     "links": {
       "shortenUrlLink": "縮網址",
       "shortenImageLink": "圖片縮網址",
       "shortenMediaLink": "影片縮網址",
-      "policyLink": "隱私權政策"
+      "policyLink": "隱私權政策",
+      "privacyPolicy": "隱私權保護政策",
+      "disclaimer": "免責聲明",
+      "termsOfService": "服務條款"
     },
     "language": {
       "english": "English",
@@ -67,7 +73,9 @@
         "label": "",
         "placeholder": "上傳圖片、上傳影像",
         "errors": {
-          "required": "請上傳至少一個文件"
+          "required": "請上傳至少一個文件",
+          "maxLength": "最多只能上傳{length}張，請重新選擇",
+          "maxSize": "最多只能上傳{size} MB，請重新選擇"
         }
       },
       "passwordRequired": {
@@ -95,7 +103,8 @@
         }
       },
       "submit": "上傳",
-      "submitting": "上傳中..."
+      "submitting": "上傳中...",
+      "todayDate": "今日日期"
     },
     "successPrompt": "上傳成功",
     "continueUploading": "繼續上傳"
@@ -108,7 +117,9 @@
         "label": "",
         "placeholder": "上傳影片、上傳音訊",
         "errors": {
-          "required": "請上傳至少一個文件"
+          "required": "請上傳至少一個文件",
+          "maxLength": "最多只能上傳{length}張，請重新選擇",
+          "maxSize": "最多只能上傳{size} MB，請重新選擇"
         }
       },
       "passwordRequired": {
@@ -136,7 +147,8 @@
         }
       },
       "submit": "上傳",
-      "submitting": "上傳中..."
+      "submitting": "上傳中...",
+      "todayDate": "今日日期"
     },
     "successPrompt": "上傳成功",
     "continueUploading": "繼續上傳"
@@ -144,6 +156,27 @@
   "resolvePage": {
     "promptText": "提示內容",
     "none": "無"
+  },
+  "PasswordResolvePage": {
+    "title": "請輸入密碼解鎖",
+    "form": {
+      "password": {
+        "label": "密碼",
+        "placeholder": "請輸入密碼",
+        "errors": {
+          "required": "請輸入密碼"
+        }
+      },
+      "submit": "送出",
+      "submitting": "送出中..."
+    }
+  },
+  "Captcha": {
+    "prompt": "驗證碼驗證提示",
+    "expired": "驗證碼已過期，請刷新頁面。",
+    "error": "驗證碼驗證錯誤，請刷新頁面。",
+    "cancel": "取消",
+    "refresh": "刷新頁面"
   },
   "ErrorCode": {
     "0": "操作成功。",

@@ -42,7 +42,7 @@ export default async function UniqueId({
       );
     }
 
-    // 並非 private 且需要密碼
+    // 需要密碼且尚未通過Token Verified
     if (
       !getRecordDetailJson.data.tokenVerified &&
       getRecordDetailJson.data.record.passwordRequired

@@ -11,7 +11,7 @@ type Props = {
 export const UploadButton: React.FC<PropsWithChildren<Props>> = ({
   accept = "",
   onChange = () => {},
-  children
+  children,
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   return (

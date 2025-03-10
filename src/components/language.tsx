@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
+import { useTranslations } from "next-intl";
 
 export default function Language() {
+  const t = useTranslations("Global");
   const router = useRouter();
 
   const changeLocale = (locale: string) => {
@@ -13,8 +15,12 @@ export default function Language() {
 
   return (
     <div className="flex space-x-2">
-      <Button variant="ghost" onClick={() => changeLocale("en")}>English</Button>
-      <Button variant="ghost" onClick={() => changeLocale("zh-TW")}>中文</Button>
+      <Button variant="ghost" onClick={() => changeLocale("en")}>
+        {t("English")}
+      </Button>
+      <Button variant="ghost" onClick={() => changeLocale("zh-TW")}>
+        {t("Chinese")}
+      </Button>
     </div>
   );
 }

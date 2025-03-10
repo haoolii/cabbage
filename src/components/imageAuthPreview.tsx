@@ -36,8 +36,8 @@ export const ImageAuthPreview: React.FC<Props> = ({ assetKey, token }) => {
 
   return (
     <div className="relative w-full">
-      <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
-        <img className="max-w-full" src={src} />
+      <div className="flex justify-center items-center bg-black min-h-60 min-w-60 overflow-hidden rounded-lg shadow-md">
+        <img className="max-w-full w-full" src={src} />
       </div>
     </div>
   );

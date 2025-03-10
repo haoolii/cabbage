@@ -5,13 +5,13 @@ export default async function Url() {
   const t = await getTranslations("UrlPage");
 
   return (
-    <div className="max-w-3xl mx-auto py-20">
-      <div className="flex flex-col items-center pb-40 px-4">
-        <h2 className="font-semibold text-3xl py-4 text-center">
+    <div className="max-w-5xl mx-auto py-4 sm:py-10 px-4">
+      <div className="py-4 sm:py-10 flex flex-col items-center">
+        <h2 className="font-semibold text-2xl sm:text-3xl py-4 text-center">
           {t("title")}
         </h2>
-        <UrlProcess />
       </div>
+      <UrlProcess />
     </div>
   );
 }

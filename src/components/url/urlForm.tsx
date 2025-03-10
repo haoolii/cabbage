@@ -1,6 +1,5 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { postRecordUrl } from "@/request/requests";
@@ -8,6 +7,18 @@ import { useTranslations } from "next-intl";
 import { isSuccess } from "@/request/util";
 import { useErrorCodeToast } from "@/hooks/useErrorToast";
 import { Captcha } from "../captcha";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/hooks/use-toast";
+import { Code } from "@/request/code";
 
 type Props = {
   onSuccess: (uniqueId: string) => void;
@@ -15,116 +26,85 @@ type Props = {
 
 export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
   const { errorCodeToast } = useErrorCodeToast();
-  const form = useForm<{
-    content: string;
-    captchToken: string;
-  }>({
+  const t = useTranslations("UrlPage");
+  const { toast } = useToast();
+  const formSchema = z.object({
+    content: z.string().nonempty(t("form.content.errors.required")),
+    captchToken: z.string().nonempty(t("form.captchaToken.errors.required")),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
       captchToken: "",
     },
-    onSubmit: async ({ value }) => {
-      const json = await postRecordUrl({
-        content: value.content,
-        captchaToken: value.captchToken,
-      });
-      if (isSuccess(json)) {
-        onSuccess(json.data.uniqueId);
-      }
-      errorCodeToast(json.code);
-    },
-    validators: {
-      onSubmit: (v) => {
-        return {
-          fields: {
-            content: !v.value.content
-              ? "form.content.errors.required"
-              : undefined,
-            captchToken: !v.value.captchToken
-              ? "form.captchaToken.errors.required"
-              : undefined,
-          },
-        };
-      },
-    },
   });
 
-  const t = useTranslations("UrlPage");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const postRecordJson = await postRecordUrl({
+        content: values.content,
+        captchaToken: values.captchToken,
+      });
+
+      if (isSuccess(postRecordJson)) {
+        onSuccess(postRecordJson.data.uniqueId);
+      }
+      errorCodeToast(postRecordJson.code);
+    } catch (err) {
+      errorCodeToast(Code.ERROR);
+    }
+  }
 
   return (
-    <div className="w-full">
-      <Button onClick={() => 
-        errorCodeToast("0")
-      }>test</Button>
-      <form
-        className="w-full flex flex-col items-center gap-6"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          await form.validateAllFields("submit");
-          form.handleSubmit();
-        }}
-      >
-        <form.Field
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+        <FormField
+          control={form.control}
           name="content"
-          children={(field) => (
-            <div key={"content"} className="flex flex-col w-full items-center space-y-2">
-              <div className="h-6 flex justify-start">
-                {field.state.meta.errors.length
-                  ? field.state.meta.errors.map((error) => (
-                      <em
-                        key={error?.toString()}
-                        role="alert"
-                        className="font-semibold text-sm text-red-500"
-                      >
-                        * {t(error)}
-                      </em>
-                    ))
-                  : null}
-              </div>
-              <Input
-                placeholder={t("form.content.placeholder")}
-                value={field.state.value}
-                className="bg-primary-foreground text-black rounded-2xl max-w-xl"
-                onChange={(e) => {
-                  field.handleChange(e.target.value);
-                }}
-              />
-            </div>
-          )}
-        />
-        <form.Field
+          render={({ field }) => {
+            return (
+              <FormItem className="flex flex-col">
+                {/* <FormLabel>{t("form.content.label")}</FormLabel> */}
+                <FormControl>
+                  <Input
+                    placeholder={t("form.content.placeholder")}
+                    className="bg-primary-foreground text-black"
+                    name={field.name}
+                    value={field.value}
+                    onBlur={field.onBlur}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        ></FormField>
+        <FormField
+          control={form.control}
           name="captchToken"
-          children={(field) => (
-            <div key={"captchToken"} className="flex flex-col items-center gap-2">
-              <Captcha onVerify={(token) => field.handleChange(token)} />
-              {field.state.meta.errors.length
-                ? field.state.meta.errors.map((error) => (
-                    <em
-                      key={error?.toString()}
-                      role="alert"
-                      className="font-semibold text-sm text-red-500"
-                    >
-                      * {t(error)}
-                    </em>
-                  ))
-                : null}
-            </div>
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Captcha onVerify={field.onChange} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <Button
-              type="submit"
-              disabled={!canSubmit}
-              className="w-44 rounded-2xl"
-            >
-              {isSubmitting ? t("form.submitting") : t("form.submit")}
-            </Button>
-          )}
-        />
+        <Button
+          disabled={form.formState.isSubmitting}
+          key={"submit"}
+          type="submit"
+          className="w-full"
+        >
+          {form.formState.isSubmitting
+            ? t("form.submitting")
+            : t("form.submit")}
+        </Button>
       </form>
-    </div>
+    </Form>
   );
 };

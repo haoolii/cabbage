@@ -16,14 +16,20 @@
     "7day": "7 days",
     "10day": "10 days",
     "30day": "30 days",
-    "Unlimited": "Unlimited"
+    "Unlimited": "Unlimited",
+    "expiredOrNotFound": "Expired or not found",
+    "Chinese": "Chinese",
+    "English": "English"
   },
   "Header": {
     "links": {
       "shortenUrlLink": "URL Shortener",
       "shortenImageLink": "Image URL Shortener",
       "shortenMediaLink": "Video URL Shortener",
-      "policyLink": "Privacy policy"
+      "policyLink": "Privacy policy",
+      "privacyPolicy": "Privacy Policy",
+      "disclaimer": "Disclaimer",
+      "termsOfService": "Terms of Service"
     },
     "language": {
       "english": "English",
@@ -67,7 +73,9 @@
         "label": "",
         "placeholder": "Upload images, upload media",
         "errors": {
-          "required": "Please upload at least one file"
+          "required": "Please upload at least one file",
+          "maxLength": "You can upload a maximum of {length} files. Please select again.",
+          "maxSize": "You can upload a maximum of {size} MB. Please select again."
         }
       },
       "passwordRequired": {
@@ -95,7 +103,8 @@
         }
       },
       "submit": "Upload",
-      "submitting": "Uploading..."
+      "submitting": "Uploading...",
+      "todayDate": "Today date"
     },
     "successPrompt": "Upload success",
     "continueUploading": "Continue uploading"
@@ -108,7 +117,9 @@
         "label": "",
         "placeholder": "Upload videos, upload audio",
         "errors": {
-          "required": "Please upload at least one file"
+          "required": "Please upload at least one file",
+          "maxLength": "You can upload a maximum of {length} files. Please select again.",
+          "maxSize": "You can upload a maximum of {size} MB. Please select again."
         }
       },
       "passwordRequired": {
@@ -136,7 +147,8 @@
         }
       },
       "submit": "Upload",
-      "submitting": "Uploading..."
+      "submitting": "Uploading...",
+      "todayDate": "Today date"
     },
     "successPrompt": "Upload success",
     "continueUploading": "Continue uploading"
@@ -144,6 +156,27 @@
   "resolvePage": {
     "promptText": "Prompt text",
     "none": "None"
+  },
+  "PasswordResolvePage": {
+    "title": "Please enter the password",
+    "form": {
+      "password": {
+        "label": "Password",
+        "placeholder": "Please enter the password",
+        "errors": {
+          "required": "Please enter the password"
+        }
+      },
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    }
+  },
+  "Captcha": {
+    "prompt": "Captcha verification prompt",
+    "expired": "Captcha verification expired, please refresh page.",
+    "error": "Captcha verification error, please refresh page.",
+    "cancel": "Cancel",
+    "refresh": "Refresh"
   },
   "ErrorCode": {
     "0": "Operation completed successfully.",
