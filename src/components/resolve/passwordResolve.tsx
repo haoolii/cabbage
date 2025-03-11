@@ -66,7 +66,7 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
         {t("title")}
       </h2>
       {record.prompt && (
-        <h3 className="py-4 text-center">提示內容: {record.prompt}</h3>
+        <h3 className="py-4 text-center">{t("prompt")}: {record.prompt}</h3>
       )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-4">
@@ -86,7 +86,7 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
                       onChange={field.onChange}
                     />
                   </FormControl>
-                  <FormDescription className="flex gap-2 overflow-scroll pt-2">
+                  <FormDescription className="flex gap-2 overflow-x-auto pt-2">
                     {previousEnterPasswords.map((password) => (
                       <Button
                         key={password}
@@ -130,25 +130,5 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
         </form>
       </Form>
     </div>
-    // <div className="flex justify-center py-20">
-    //   <div className="w-full max-w-xl flex flex-col gap-6 items-center px-4">
-    //     <h2 className="font-semibold text-3xl py-4">請輸入密碼解鎖</h2>
-    //     <div>
-    //       <span className="font-medium text-sm text-primary-foreground/60">
-    //         提示內容: {record.prompt || "無"}
-    //       </span>
-    //     </div>
-    //     <Input
-    //       placeholder="請輸入密碼"
-    //       value={password}
-    //       className="bg-primary-foreground text-black rounded-2xl max-w-xl"
-    //       onChange={(e) => setPassword(e.target.value)}
-    //     />
-    //     <Captcha onVerify={(token) => setCaptchaToken(token)} />
-    //     <Button className="w-44 rounded-2xl" disabled={!(captchaToken && password)} onClick={() => onSubmit()}>
-    //       送出
-    //     </Button>
-    //   </div>
-    // </div>
   );
 };

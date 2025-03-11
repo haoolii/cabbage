@@ -190,7 +190,8 @@
       },
       "submit": "送出",
       "submitting": "送出中..."
-    }
+    },
+    "prompt": "提示"
   },
   "Captcha": {
     "prompt": "驗證碼驗證提示",

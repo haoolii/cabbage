@@ -190,7 +190,8 @@
       },
       "submit": "Submit",
       "submitting": "Submitting..."
-    }
+    },
+    "prompt": "Prompt"
   },
   "Captcha": {
     "prompt": "Captcha verification prompt",
