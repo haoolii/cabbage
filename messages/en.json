@@ -35,7 +35,8 @@
     "shortenMedia": "Shorten Media URL",
     "shortenUrlActionLink": "I want to shorten a URL.",
     "shortenImageActionLink": "I want to shorten a Image.",
-    "shortenMediaActionLink": "I want to shorten a Video or an Audio file."
+    "shortenMediaActionLink": "I want to shorten a Video or an Audio file.",
+    "downloadQRCode": "Download QRCode"
   },
   "Header": {
     "links": {
