@@ -129,8 +129,9 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
 
       if (isSuccess(postRecordJson)) {
         onSuccess(values.files, postRecordJson.data.uniqueId);
+      } else {
+        errorCodeToast(postRecordJson.code);
       }
-      errorCodeToast(postRecordJson.code);
     } catch {
       errorCodeToast(Code.ERROR);
     }
