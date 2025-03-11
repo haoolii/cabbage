@@ -20,13 +20,15 @@ export const MediaPreview: React.FC<Props> = ({ file }) => {
 
   return (
     <div className="relative w-full">
-      <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
-        <video controls className="max-w-full">
-          <source src={src} type="video/mp4" />
-          <source src={src} type="audio/mpeg" />
-          {"browser not support"}
-        </video>
-      </div>
+      {src && (
+        <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
+          <video controls className="max-w-full">
+            <source src={src} type="video/mp4" />
+            <source src={src} type="audio/mpeg" />
+            {"browser not support"}
+          </video>
+        </div>
+      )}
     </div>
   );
 };

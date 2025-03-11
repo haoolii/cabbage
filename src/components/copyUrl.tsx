@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "next-intl";
+import { QRCodeDrawer } from "./qrcodeDrawer";
 
 type Props = {
   url: string;
@@ -32,12 +33,13 @@ export const CopyUrl: React.FC<Props> = ({ url }) => {
     <div className="bg-secondary border-2  pl-6 pr-4 py-2 rounded-full flex items-center gap-4">
       <span>{url}</span>
       <Button
-        className="rounded-full bg-background hover:bg-background"
+        className="rounded-full"
         onClick={() => handleCopy()}
       >
-        <span className="text-sm">{t("Copy")}</span>
+        {/* <span className="text-sm">{t("Copy")}</span> */}
         <Copy />
       </Button>
+      <QRCodeDrawer value={url} />
     </div>
   );
 };

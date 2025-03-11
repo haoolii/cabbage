@@ -33,7 +33,7 @@ export const ImageControl: React.FC<Props> = ({
         <Cross1Icon width={24} height={24} />
       </Button>
       <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
-        <Image alt="image" className="max-w-full" src={src} />
+        {src && <img alt="image" className="max-w-full" src={src} />}
       </div>
     </div>
   );

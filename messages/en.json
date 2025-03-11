@@ -2,6 +2,10 @@
   "HomePage": {
     "title": "Hello world!"
   },
+  "ContactPage": {
+    "contactEmail": "Contact Email",
+    "backToHome": "Back to home"
+  },
   "Global": {
     "title": "Beurl URL Shortener, Video Compressor, Image Compressor, Upload Images, Upload Videos, Upload Photos",
     "description": "Beurl offers features for uploading and sharing 'compressed images,' 'compressed videos,' and 'audio files,' combined with a 'URL shortening' service. It’s a free, secure, and privacy-focused anonymous upload SPACE. With a simple interface, you can easily create short URLs, share images, videos, and audio, making social media sharing more convenient! Supports password protection for photos, videos, and images.",
@@ -18,9 +22,10 @@
     "30day": "30 days",
     "Unlimited": "Unlimited",
     "expiredOrNotFound": "Expired or not found",
+    "backToHome": "Back to home",
     "Chinese": "Chinese",
     "English": "English",
-    "copy": "Copy",
+    "Copy": "Copy",
     "prompt": "Prompt",
     "copySuccess": "Copy success",
     "error": "Error",
@@ -118,7 +123,8 @@
       "todayDate": "Today date"
     },
     "successPrompt": "Upload success",
-    "continueUploading": "Continue uploading"
+    "continueUploading": "Continue uploading",
+    "visitNow": "Visit now"
   },
   "MediaPage": {
     "title": "The safest, fastest, most convenient, and free URL shortening service",
@@ -162,12 +168,14 @@
       "todayDate": "Today date"
     },
     "successPrompt": "Upload success",
-    "continueUploading": "Continue uploading"
+    "continueUploading": "Continue uploading",
+    "visitNow": "Visit now"
   },
   "resolvePage": {
     "promptText": "Prompt text",
     "none": "None",
-    "countLabel": "View count of this short URL."
+    "countLabel": "View count of this short URL.",
+    "report": "Report"
   },
   "PasswordResolvePage": {
     "title": "Please enter the password",
@@ -218,7 +226,7 @@
       "2_title": "2. Collection, Processing, and Use of Personal Data",
       "2_content": "When you visit this website or use the functions and services provided by this website, we will request that you provide necessary personal data based on the nature of the service. We will process and use your personal data within the specific purpose for which it was collected. Without your written consent, this website will not use your personal data for other purposes.\n\nThis website will retain your name, email address, contact information, and usage time when you use interactive features such as service emails or surveys.\n\nDuring general browsing, the server will automatically record relevant behaviors, including the IP address of the device you use to connect, usage time, browser used, and browsing and click data records. These records are used internally to improve our website services and will not be disclosed externally.\n\nTo provide precise services, we will conduct statistical analysis of the content collected from surveys. The results of the analysis, including statistical data and explanatory text, will be used for internal research and may be published as needed, but will not involve specific personal data.\n\nYou can request to correct or delete your account or personal data collected by this website at any time. Please refer to the contact information below to submit your request.",
       "3_title": "3. Data Protection",
-      "3_content": "This website's servers are equipped with firewalls, antivirus systems, and other security equipment to protect the website and your personal data. Strict protection measures are implemented, allowing only authorized personnel to access your personal data. All handling personnel have signed confidentiality agreements, and any violation of confidentiality obligations will be subject to legal sanctions.\n\nIf it is necessary to commission other units to provide services due to business needs, this website will strictly require them to comply with confidentiality obligations and implement necessary inspection procedures to ensure compliance.",
+      "3_content": "This website's servers are equipped with firewalls, antivirus systems, and other security equipment to protect the website and your personal data. Strict protection measures are implemented, allowing only authorized personnel to access your personal data, and any violation of confidentiality obligations will be subject to legal sanctions.\n\nIf it is necessary to commission other units to provide services due to business needs, this website will strictly require them to comply with confidentiality obligations and implement necessary inspection procedures to ensure compliance.",
       "4_title": "4. External Links",
       "4_content": "This website provides links to other websites, and you can access these websites through the links provided. However, please note that these linked websites are not subject to this website's privacy protection policy. You must refer to the privacy protection policy of the linked website.",
       "5_title": "5. Policy on Sharing Personal Data with Third Parties",
@@ -228,7 +236,7 @@
       "7_title": "7. Amendments to the Privacy Protection Policy",
       "7_content": "This website's privacy protection policy will be revised as needed, and revised terms will be published on the website. We will notify users through appropriate means when changes are made.",
       "8_title": "8. Contact Channel",
-      "8_content": "For any questions about this website's privacy policy or to request changes or removal of personal data, please email us at: ooo@example.com."
+      "8_content": "For any questions about this website's privacy policy or to request changes or removal of personal data, please email us at: admin@beurl.cc."
     },
     "disclaimer": {
       "title": "Disclaimer",
@@ -252,7 +260,7 @@
     "termsOfService": {
       "title": "Terms of Service",
       "1_title": "1. Acceptance of Terms",
-      "1_content": "Welcome to [Your Website Name] (hereinafter referred to as 'the Website'). By using the Website, you (hereinafter referred to as 'User') agree to comply with these Terms of Service (hereinafter referred to as 'the Terms') and all applicable laws and regulations. If you do not agree to these Terms, please do not use the Website. We reserve the right to modify these Terms at any time, and such modifications will take effect immediately upon posting on the Website. Continued use of the Website constitutes your acceptance of the updated Terms.",
+      "1_content": "Welcome to Beurl (hereinafter referred to as 'the Website'). By using the Website, you (hereinafter referred to as 'User') agree to comply with these Terms of Service (hereinafter referred to as 'the Terms') and all applicable laws and regulations. If you do not agree to these Terms, please do not use the Website. We reserve the right to modify these Terms at any time, and such modifications will take effect immediately upon posting on the Website. Continued use of the Website constitutes your acceptance of the updated Terms.",
       "2_title": "2. Service Description",
       "2_content": "The Website provides online services including, but not limited to, URL shortening, sharing of user-uploaded content (text, images, videos, etc.), and other related features. We reserve the right to adjust, suspend, or terminate any or all parts of the services at any time without prior notice and shall not be liable for any resulting losses.",
       "3_title": "3. Eligibility",

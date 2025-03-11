@@ -2,7 +2,6 @@
 
 import { FileWrapper } from "@/types";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 type Props = {
   file: FileWrapper;
@@ -22,7 +21,7 @@ export const ImagePreview: React.FC<Props> = ({ file }) => {
   return (
     <div className="relative w-full">
       <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
-        <Image alt="image" className="max-w-full" src={src} />
+        {src && <img alt="image" className="max-w-full" src={src} />}
       </div>
     </div>
   );

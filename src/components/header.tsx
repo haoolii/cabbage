@@ -26,7 +26,7 @@ export const Header = () => {
     <div>
       <header className="max-w-5xl w-full mx-auto flex items-center gap-x-2 p-4">
         <Link href={"/"} className="justify-center items-center flex mr-4">
-          <Image src="/logo.svg" alt="logo" className="h-8" />
+          <Image src="/logo.svg" alt="logo" className="h-8" width={32} height={32} />
           <h1 className="font-semibold -mb-1">{"BeURL"}</h1>
         </Link>
         <nav className="gap-2 hidden md:flex -mb-1">

@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <div>
       <div className="flex flex-col items-center pt-32 pb-40">
-        <Image src="/logo.svg" alt="logo" className="w-40" />
+        <Image src="/logo.svg" alt="logo" className="w-40" width={160} height={160} />
         <h2 className="font-bold text-8xl py-4 text-center">{"BEURL"}</h2>
         <Hero />
         <div className="py-10 flex flex-col sm:flex-row justify-center items-center gap-4">

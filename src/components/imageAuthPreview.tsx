@@ -42,7 +42,7 @@ export const ImageAuthPreview: React.FC<Props> = ({ assetKey, token }) => {
         <Skeleton className="w-full h-full aspect-square"></Skeleton>
       ) : (
         <div className="flex justify-center items-center bg-black min-h-60 min-w-60 overflow-hidden rounded-lg shadow-md">
-          {src && <Image alt="image" className="max-w-full w-full" src={src} />}
+          {src && <img alt="image" className="max-w-full w-full" src={src} />}
         </div>
       )}
     </div>

@@ -1,6 +1,8 @@
 import { Record } from "@/request/types";
 import { ImageAuthPreview } from "../imageAuthPreview";
 import { getTranslations } from "next-intl/server";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 type Props = {
   record: Record;
@@ -39,6 +41,12 @@ export const ImageResolve: React.FC<Props> = async ({
         <div className="flex flex-col items-center">
           <span>{t("countLabel")}</span>
           <span className="font-bold">{count}</span>
+        </div>
+
+        <div>
+          <Link target="_blank" href={"https://docs.google.com/forms/d/e/1FAIpQLSdnZvBuCDzDPo8CfhonKDzK3L-SsukeWIJdZMzv9Kqq7kelug/viewform?usp=dialog"}>
+            <Button variant="destructive">{t('report')}</Button>
+          </Link>
         </div>
       </div>
     </div>

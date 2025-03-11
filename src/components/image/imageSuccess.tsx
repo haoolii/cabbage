@@ -3,9 +3,10 @@
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import { CopyUrl } from "../copyUrl";
-import env from "@/core/env";
 import { FileWrapper } from "@/types";
 import { ImagePreview } from "../ImagePreview";
+import Link from "next/link";
+import env from "@/core/env";
 
 type Props = {
   files: FileWrapper[];
@@ -31,9 +32,17 @@ export const ImageSuccess: React.FC<Props> = ({ files, uniqueId, onReset }) => {
       <div className="py-4">
         <CopyUrl url={uniqueIdUrl} />
       </div>
-      <Button onClick={() => onReset()} className="w-44 rounded-2xl">
-        {t("continueUploading")}
-      </Button>
+
+      <div className="flex gap-4">
+        <Link href={uniqueIdUrl} target="_blank">
+          <Button variant="outline">
+            {t("visitNow")}
+          </Button>
+        </Link>
+        <Button onClick={() => onReset()}>
+          {t("continueUploading")}
+        </Button>
+      </div>
     </div>
   );
 };

@@ -10,9 +10,9 @@ export const Footer: React.FC = async () => {
       <div className="max-w-4xl mx-auto space-y-4">
         <div>version: {env.VERSION || "-"}</div>
         <nav className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link href={"/about"} className="hover:underline">
+          {/* <Link href={"/about"} className="hover:underline">
             {t("about")}
-          </Link>
+          </Link> */}
           <Link href="/contact" className="hover:underline">
             {t("contact")}
           </Link>
