@@ -36,7 +36,7 @@ export const Captcha: React.FC<Props> = ({
         siteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
         retry="never"
         execution="render"
-        refreshExpired="manual"
+        refreshExpired="auto"
         sandbox={env.NODE_ENV === "development"}
         onError={() => {
           setError(true);
