@@ -50,8 +50,9 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
 
       if (isSuccess(postRecordJson)) {
         onSuccess(postRecordJson.data.uniqueId);
+      } else {
+        errorCodeToast(postRecordJson.code);
       }
-      errorCodeToast(postRecordJson.code);
     } catch (err) {
       errorCodeToast(Code.ERROR);
     }
