@@ -24,7 +24,7 @@ export const ImageResolve: React.FC<Props> = async ({
             <span>{record.prompt || t("none")}</span>
           </div>
         )}
-        <div>
+        <div className="w-full space-y-4">
           {(record?.assets || []).map((asset) => {
             return (
               <ImageAuthPreview
@@ -37,7 +37,7 @@ export const ImageResolve: React.FC<Props> = async ({
         </div>
 
         <div className="flex flex-col items-center">
-          <span>此短網址閱覽次數</span>
+          <span>{t("countLabel")}</span>
           <span className="font-bold">{count}</span>
         </div>
       </div>

@@ -7,7 +7,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { Noto_Sans_TC } from "next/font/google";
 import { Footer } from "@/components/footer";
 
-const fontTC = Noto_Sans_TC({ weight: ["100", "200", "300", "400", "500", "600"], subsets: ['latin'] });
+const fontTC = Noto_Sans_TC({
+  weight: ["100", "200", "300", "400", "500", "600"],
+  subsets: ["latin"],
+});
 
 export async function generateMetadata(
   { params: { locale } }: { params: { locale: string } },
@@ -18,38 +21,19 @@ export async function generateMetadata(
   return {
     title: t("title"),
     description: t("description"),
-    // keywords: [
-    //   "USDT 匯率",
-    //   "usdtwd 匯率",
-    //   "usdt 換 twd",
-    //   "usdt 台幣匯率",
-    //   "usdt 轉台幣",
-    //   "usdtw",
-    //   "USDT",
-    //   "泰達幣",
-    //   "比比幣",
-    //   "比價",
-    //   "加密貨幣",
-    //   "交易所",
-    //   "划算",
-    //   "交易",
-    //   "合規",
-    //   "虛擬貨幣",
-    //   "台灣",
-    //   "台幣",
-    // ].map((w) => t(w)),
-    // icons: [
-    //   {
-    //     type: "image/png",
-    //     sizes: "32x32",
-    //     url: "/favicon-32x32.png",
-    //   },
-    //   {
-    //     type: "image/png",
-    //     sizes: "16x16",
-    //     url: "/favicon-16x16.png",
-    //   },
-    // ],
+    icons: {
+      icon: [
+        { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
+    manifest: "/site.webmanifest",
+    appleWebApp: {
+      title: "MyWebSite",
+    },
+    keywords: [],
     openGraph: {
       title: t("title"),
       description: t("description"),
@@ -61,7 +45,6 @@ export async function generateMetadata(
     //   "msapplication-TileColor": "#ee4d2d",
     //   "theme-color": "#ee4d2d",
     // },
-    // manifest: "/site.webmanifest",
   };
 }
 
@@ -77,15 +60,15 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={`${fontTC.className} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-            <div vaul-drawer-wrapper="">
-              <div className="bg-primary-foreground">
-                <Header />
-                <div className="min-h-dvh">{children}</div>
-                <Toaster />
-                <div className="h-16 sm:hidden"></div>
-                <Footer />
-              </div>
+          <div vaul-drawer-wrapper="">
+            <div className="bg-primary-foreground">
+              <Header />
+              <div className="min-h-dvh">{children}</div>
+              <Toaster />
+              <div className="h-16 sm:hidden"></div>
+              <Footer />
             </div>
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

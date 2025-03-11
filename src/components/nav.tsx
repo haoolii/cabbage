@@ -1,20 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "./ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "./ui/drawer";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import ReactDOM from "react-dom";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+
+// components
+import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Separator } from "./ui/separator";
+import { Button } from "./ui/button";
 import Language from "./language";
 
 export const Nav = () => {
@@ -63,10 +58,6 @@ export const Nav = () => {
         </Button>
       </DrawerTrigger>
       <DrawerContent className="h-4/5">
-        {/* <DrawerHeader>
-        <DrawerTitle>Move Goal</DrawerTitle>
-        <DrawerDescription>Set your daily activity goal.</DrawerDescription>
-      </DrawerHeader> */}
         <div className="mx-auto w-full py-4 flex flex-col px-4 h-full">
           {links.map((link) => {
             const href = link.value;
@@ -98,55 +89,9 @@ export const Nav = () => {
             );
           })}
           <Separator className="max-w-40 mx-auto my-4" />
-          {/* <Separator className="max-w-40 mx-auto my-4" />
-          {policies.map((link) => {
-            const href = link.value;
-            return (
-              <Link
-                key={link.value}
-                href={href}
-                className="py-1 w-full"
-                onClick={() => {
-                  if (href === window.location.pathname) {
-                    // If the URL is the same, close, wait a little, and scroll to top smoothly
-                    setOpen(false);
-                    setTimeout(() => {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }, 500);
-                  } else {
-                    // Otherwise, wait for the URL change before closing and scroll up instantly
-                    onUrlChange(() => {
-                      ReactDOM.flushSync(() => setOpen(false));
-                      window.scrollTo({ top: 0, behavior: "instant" });
-                    });
-                  }
-                }}
-              >
-                <Button variant="ghost" className="w-full">
-                  {t(link.label)}
-                </Button>
-              </Link>
-            );
-          })} */}
-          {/* <div className="flex-1"></div> */}
           <div className="flex justify-center">
             <Language />
           </div>
-          {/* <DrawerHeader>
-          <DrawerTitle>Move Goal</DrawerTitle>
-          <DrawerDescription>
-            Set your daily activity goal.
-          </DrawerDescription>
-        </DrawerHeader> */}
-          {/* <div className="p-4 pb-0">
-          <h1>Hello World</h1>
-        </div> */}
-          {/* <DrawerFooter>
-          <Button>Submit</Button>
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter> */}
         </div>
       </DrawerContent>
     </Drawer>

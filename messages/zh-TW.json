@@ -19,7 +19,18 @@
     "Unlimited": "無期限",
     "expiredOrNotFound": "不存在或是已經過期",
     "Chinese": "中文",
-    "English": "英文"
+    "English": "英文",
+    "copy": "複製",
+    "prompt": "提示",
+    "copySuccess": "複製成功",
+    "error": "錯誤",
+    "copyFailed": "複製失敗，請重新嘗試",
+    "shortenUrl": "縮網址",
+    "shortenImage": "縮圖片、照片網址",
+    "shortenMedia": "縮影片、音訊網址",
+    "shortenUrlActionLink": "我要縮網址",
+    "shortenImageActionLink": "我要縮圖片或照片",
+    "shortenMediaActionLink": "我要縮影片或音訊檔"
   },
   "Header": {
     "links": {
@@ -155,7 +166,8 @@
   },
   "resolvePage": {
     "promptText": "提示內容",
-    "none": "無"
+    "none": "無",
+    "countLabel": "此短網址閱覽次數"
   },
   "PasswordResolvePage": {
     "title": "請輸入密碼解鎖",
@@ -193,6 +205,9 @@
     "20008": "文件未找到。",
     "20009": "記錄已過期。",
     "20010": "無效的請求數據。",
+    "20011": "檔案數量超過上限。",
+    "20012": "檔案大小超過上限。",
+    "20013": "不支援的檔案類型。",
     "80001": "未授權訪問。"
   },
   "Policy": {

@@ -8,7 +8,10 @@ type Props = {
   onDelete?: (id: string) => void;
 };
 
-export const MediaControl: React.FC<Props> = ({ file, onDelete = () => {} }) => {
+export const MediaControl: React.FC<Props> = ({
+  file,
+  onDelete = () => {},
+}) => {
   const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
@@ -29,7 +32,6 @@ export const MediaControl: React.FC<Props> = ({ file, onDelete = () => {} }) => 
         <Cross1Icon width={24} height={24} />
       </Button>
       <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
-        {/* <img className="max-w-full" src={src} /> */}
         <video controls className="max-w-full">
           <source src={src} type="video/mp4" />
           <source src={src} type="audio/mpeg" />

@@ -1,7 +1,9 @@
 "use client";
 
 import env from "@/core/env";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Skeleton } from "./ui/skeleton";
+import Image from "next/image";
 
 type Props = {
   assetKey: string;
@@ -12,7 +14,7 @@ export const ImageAuthPreview: React.FC<Props> = ({ assetKey, token }) => {
   const [src, setSrc] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const loadImage = async (url: string) => {
+  const loadImage = useCallback(async (url: string) => {
     try {
       setLoading(true);
       const response = await fetch(url, {
@@ -28,17 +30,21 @@ export const ImageAuthPreview: React.FC<Props> = ({ assetKey, token }) => {
       console.error(err);
       setLoading(false);
     }
-  };
+  }, [setLoading, token]);
 
   useEffect(() => {
     loadImage(`${env.ASSET_BASE}/${assetKey}`);
-  }, [assetKey]);
+  }, [assetKey, loadImage]);
 
   return (
     <div className="relative w-full">
-      <div className="flex justify-center items-center bg-black min-h-60 min-w-60 overflow-hidden rounded-lg shadow-md">
-        <img className="max-w-full w-full" src={src} />
-      </div>
+      {loading ? (
+        <Skeleton className="w-full h-full aspect-square"></Skeleton>
+      ) : (
+        <div className="flex justify-center items-center bg-black min-h-60 min-w-60 overflow-hidden rounded-lg shadow-md">
+          {src && <Image alt="image" className="max-w-full w-full" src={src} />}
+        </div>
+      )}
     </div>
   );
 };

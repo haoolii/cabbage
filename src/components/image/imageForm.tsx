@@ -146,7 +146,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
     if (!passwordRequired) {
       form.setValue("password", "");
     }
-  }, [passwordRequired]);
+  }, [passwordRequired, form]);
 
   return (
     <Form {...form}>

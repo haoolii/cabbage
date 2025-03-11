@@ -2,13 +2,17 @@ import { FileWrapper } from "@/types";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 type Props = {
   file: FileWrapper;
   onDelete?: (id: string) => void;
 };
 
-export const ImageControl: React.FC<Props> = ({ file, onDelete = () => {} }) => {
+export const ImageControl: React.FC<Props> = ({
+  file,
+  onDelete = () => {},
+}) => {
   const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
@@ -29,7 +33,7 @@ export const ImageControl: React.FC<Props> = ({ file, onDelete = () => {} }) => 
         <Cross1Icon width={24} height={24} />
       </Button>
       <div className="flex justify-center items-center bg-black min-h-60 overflow-hidden rounded-lg shadow-md">
-        <img className="max-w-full" src={src} />
+        <Image alt="image" className="max-w-full" src={src} />
       </div>
     </div>
   );

@@ -7,8 +7,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export function sumFileBytesSize(files: File[]) {
   let totalSize = 0;
-  for (let file of files) {
-    totalSize += file.size;
+  for (const _file of files) {
+    totalSize += _file.size;
   }
   return totalSize;
 }

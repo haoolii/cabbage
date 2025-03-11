@@ -58,7 +58,7 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
 
   const previousEnterPasswords = useMemo(() => {
     return get();
-  }, []);
+  }, [get]);
 
   return (
     <div className="max-w-5xl mx-auto py-4 sm:py-10 px-4">
@@ -89,6 +89,7 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
                   <FormDescription className="flex gap-2 overflow-scroll pt-2">
                     {previousEnterPasswords.map((password) => (
                       <Button
+                        key={password}
                         size="sm"
                         type="button"
                         onClick={() => {

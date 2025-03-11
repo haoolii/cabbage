@@ -1,4 +1,4 @@
-export default {
+const env = {
   APP_NAME: process.env.APP_NAME,
   CLIENT_API_BASE: process.env.CLIENT_API_BASE,
   ASSET_BASE: process.env.ASSET_BASE,
@@ -8,3 +8,5 @@ export default {
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
   VERSION: process.env.VERSION,
 };
+
+export default env;

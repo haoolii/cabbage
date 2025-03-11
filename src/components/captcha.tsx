@@ -40,11 +40,15 @@ export const Captcha: React.FC<Props> = ({
         sandbox={env.NODE_ENV === "development"}
         onError={() => {
           setError(true);
-          onError && onError;
+          if (onError) {
+            onError();
+          }
         }}
         onExpire={() => {
           setExpired(true);
-          onExpire && onExpire();
+          if (onExpire) {
+            onExpire();
+          }
         }}
         onLoad={onLoad}
         onVerify={onVerify}

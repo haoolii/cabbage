@@ -19,7 +19,18 @@
     "Unlimited": "Unlimited",
     "expiredOrNotFound": "Expired or not found",
     "Chinese": "Chinese",
-    "English": "English"
+    "English": "English",
+    "copy": "Copy",
+    "prompt": "Prompt",
+    "copySuccess": "Copy success",
+    "error": "Error",
+    "copyFailed": "Copy failed, please try again.",
+    "shortenUrl": "Shorten URL",
+    "shortenImage": "Shorten Image URL",
+    "shortenMedia": "Shorten Media URL",
+    "shortenUrlActionLink": "I want to shorten a URL.",
+    "shortenImageActionLink": "I want to shorten a Image.",
+    "shortenMediaActionLink": "I want to shorten a Video or an Audio file."
   },
   "Header": {
     "links": {
@@ -155,7 +166,8 @@
   },
   "resolvePage": {
     "promptText": "Prompt text",
-    "none": "None"
+    "none": "None",
+    "countLabel": "View count of this short URL."
   },
   "PasswordResolvePage": {
     "title": "Please enter the password",
@@ -193,6 +205,9 @@
     "20008": "File not found.",
     "20009": "Record has expired.",
     "20010": "Invalid request data.",
+    "20011": "File count exceeds the limit.",
+    "20012": "File size exceeds the limit.",
+    "20013": "File type not supported.",
     "80001": "Unauthorized access."
   },
   "Policy": {
