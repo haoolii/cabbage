@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 
 const KEY = "CABBAGE_PASSWORD_ENTER_HISTORIES";
-const EXPIRES_IN_HOURS = 1; // 1 小時
+const EXPIRES_IN_HOURS = 0.1; // 1 小時
 
 export const useHistoriesPassword = () => {
   return {

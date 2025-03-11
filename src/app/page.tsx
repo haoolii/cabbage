@@ -14,13 +14,13 @@ export default async function Home() {
         <h2 className="font-bold text-8xl py-4 text-center">{"BEURL"}</h2>
         <Hero />
         <div className="py-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Link href={"/url"} target="_blank">
+          <Link href={"/url"}>
             <Button variant="outline">{t("shortenUrlActionLink")}</Button>
           </Link>
-          <Link href={"/image"} target="_blank">
+          <Link href={"/image"}>
             <Button variant="outline">{t("shortenImageActionLink")}</Button>
           </Link>
-          <Link href={"/media"} target="_blank">
+          <Link href={"/media"}>
             <Button variant="outline">{t("shortenMediaActionLink")}</Button>
           </Link>
         </div>
