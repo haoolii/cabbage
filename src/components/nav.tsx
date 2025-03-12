@@ -57,7 +57,7 @@ export const Nav = () => {
           <HamburgerMenuIcon />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-4/5">
+      <DrawerContent className="h-4/5 max-w-3xl mx-auto">
         <div className="mx-auto w-full py-4 flex flex-col px-4 h-full">
           {links.map((link) => {
             const href = link.value;

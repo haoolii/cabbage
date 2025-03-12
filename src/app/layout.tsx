@@ -6,6 +6,7 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Noto_Sans_TC } from "next/font/google";
 import { Footer } from "@/components/footer";
+import Script from "next/script";
 
 const fontTC = Noto_Sans_TC({
   weight: ["100", "200", "300", "400", "500", "600"],
@@ -39,12 +40,12 @@ export async function generateMetadata(
       description: t("description"),
       // images: "og.png",
     },
-    // other: {
-    //   "google-site-verification": "iCnHzSsovYn-Tqm8zsYP257tj72IgGl_0TTCVYCjU-4",
-    //   "google-adsense-account": "ca-pub-8420154229372901",
-    //   "msapplication-TileColor": "#ee4d2d",
-    //   "theme-color": "#ee4d2d",
-    // },
+    other: {
+      // "google-site-verification": "iCnHzSsovYn-Tqm8zsYP257tj72IgGl_0TTCVYCjU-4",
+      // "google-adsense-account": "ca-pub-8420154229372901",
+      "msapplication-TileColor": "#fff",
+      "theme-color": "#fff",
+    },
   };
 }
 
@@ -71,6 +72,19 @@ export default async function RootLayout({
           </div>
         </NextIntlClientProvider>
       </body>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-JZ36FSNR54"
+      />
+      <Script id="google-analytics">
+        {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-JZ36FSNR54');
+            `}
+      </Script>
     </html>
   );
 }
