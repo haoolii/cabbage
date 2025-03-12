@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useHistoriesPassword } from "@/hooks/useHistoriesPassword";
+import dayjs from "dayjs";
 type Props = {
   uniqueId: string;
   record: Record;
@@ -29,6 +30,7 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
   const { errorCodeToast } = useErrorCodeToast();
   const { get, set } = useHistoriesPassword();
   const t = useTranslations("PasswordResolvePage");
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const formSchema = z.object({
     password: z.string().nonempty(t("form.captchaToken.errors.required")),
     captchToken: z.string().nonempty(t("form.captchaToken.errors.required")),
@@ -43,17 +45,22 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const json = await postRecordPassword(uniqueId, {
-      password: values.password,
-      captchaToken: values.captchToken,
-    });
-    if (isSuccess(json)) {
-      set(values.password);
-      document.cookie = `Authorization=${json?.data?.token}; path=/;`;
-      window.location.reload();
-      return;
+    try {
+      const json = await postRecordPassword(uniqueId, {
+        password: values.password,
+        captchaToken: values.captchToken,
+      });
+      if (isSuccess(json)) {
+        set(values.password);
+        document.cookie = `Authorization=${json?.data?.token}; path=/;`;
+        window.location.reload();
+        setIsRedirecting(true);
+        return;
+      }
+      errorCodeToast(json.code);
+    } catch (err) {
+      setIsRedirecting(false);
     }
-    errorCodeToast(json.code);
   };
 
   const previousEnterPasswords = useMemo(() => {
@@ -66,7 +73,14 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
         {t("title")}
       </h2>
       {record.prompt && (
-        <h3 className="py-4 text-center">{t("prompt")}: {record.prompt}</h3>
+        <h3 className="py-4 text-center">
+          {t("prompt")}: {record.prompt}
+        </h3>
+      )}
+      {record.createdAt && (
+        <h3 className="py-4 text-center text-gray-600">
+          {t("createdAt")} {dayjs(record.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+        </h3>
       )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-4">
@@ -118,14 +132,14 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
             )}
           />
           <Button
-            disabled={form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting || isRedirecting}
             key={"submit"}
             type="submit"
             className="w-full"
           >
             {form.formState.isSubmitting
               ? t("form.submitting")
-              : t("form.submit")}
+              : isRedirecting ? t('redirecting') : t("form.submit")}
           </Button>
         </form>
       </Form>

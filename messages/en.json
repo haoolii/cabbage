@@ -191,7 +191,9 @@
       "submit": "Submit",
       "submitting": "Submitting..."
     },
-    "prompt": "Prompt"
+    "prompt": "Prompt",
+    "createdAt": "Created Time",
+    "redirecting": "Redirecting..."
   },
   "Captcha": {
     "prompt": "Captcha verification prompt",

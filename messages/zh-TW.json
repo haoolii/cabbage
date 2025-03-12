@@ -191,7 +191,9 @@
       "submit": "送出",
       "submitting": "送出中..."
     },
-    "prompt": "提示"
+    "prompt": "提示",
+    "createdAt": "建立時間",
+    "redirecting": "跳轉中.."
   },
   "Captcha": {
     "prompt": "驗證碼驗證提示",
