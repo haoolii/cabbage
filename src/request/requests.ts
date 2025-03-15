@@ -1,5 +1,6 @@
 import { api, containerApi } from "./endpoint";
 import {
+  GetConfigsApiResponse,
   GetRecordApiResponse,
   GetRecordCountApiResponse,
   PostImageRecordBody,
@@ -123,6 +124,26 @@ export const postRecordPassword = async (
     body: JSON.stringify(body),
   });
   const json = (await response.json()) as PostRecordPasswordApiResponse;
+
+  return json;
+};
+
+export const getServerConfigs = async () => {
+  const response = await fetch(containerApi.getConfigs, {
+    method: "GET",
+  });
+
+  const json = (await response.json()) as GetConfigsApiResponse;
+
+  return json;
+};
+
+export const getConfigs = async () => {
+  const response = await fetch(api.getConfigs, {
+    method: "GET",
+  });
+
+  const json = (await response.json()) as GetConfigsApiResponse;
 
   return json;
 };

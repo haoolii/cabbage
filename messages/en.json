@@ -220,7 +220,11 @@
     "20011": "File count exceeds the limit.",
     "20012": "File size exceeds the limit.",
     "20013": "File type not supported.",
-    "80001": "Unauthorized access."
+    "30001": "Service Temporarily Closed",
+    "80001": "Unauthorized access",
+    "80002": "Captcha token is empty",
+    "80003": "Captcha token verification failed",
+    "80004": "Captcha token is invalid"
   },
   "Policy": {
     "privacy": {

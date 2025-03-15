@@ -26,8 +26,8 @@ export type Record = {
     key: string;
   }>;
   urls?: Array<{
-    content: string,
-  }>
+    content: string;
+  }>;
 };
 
 export type GetRecordApiResponse = ApiResponse<{
@@ -58,12 +58,20 @@ export type PostRecordPasswordApiResponse = ApiResponse<{
   token: string;
 }>;
 
-
 export type PostImageRecordBody = {
   prompt?: string;
   password?: string;
   passwordRequired: boolean;
   expireIn: number;
-  files?: File[]
+  files?: File[];
   captchaToken: string;
 };
+
+export type Config = {
+  key: string;
+  value: string;
+};
+
+export type GetConfigsApiResponse = ApiResponse<{
+  configs: Config[];
+}>;
