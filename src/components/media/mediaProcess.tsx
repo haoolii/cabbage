@@ -16,6 +16,10 @@ export const MediaProcess: React.FC = () => {
           onSuccess={(files, uniqueId) => {
             setFiles(files);
             setUniqueId(uniqueId);
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth", // 平滑滾動
+            });
           }}
         />
       ) : (
@@ -25,6 +29,10 @@ export const MediaProcess: React.FC = () => {
           onReset={() => {
             setFiles([]);
             setUniqueId("");
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth", // 平滑滾動
+            });
           }}
         />
       )}

@@ -17,6 +17,10 @@ export const ImageProcess: React.FC = () => {
           onSuccess={(files, uniqueId) => {
             setFiles(files);
             setUniqueId(uniqueId);
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth", // 平滑滾動
+            });
           }}
         />
       ) : (
@@ -26,6 +30,10 @@ export const ImageProcess: React.FC = () => {
           onReset={() => {
             setFiles([]);
             setUniqueId("");
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth", // 平滑滾動
+            });
           }}
         />
       )}

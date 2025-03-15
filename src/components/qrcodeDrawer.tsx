@@ -41,8 +41,10 @@ export const QRCodeDrawer: React.FC<Props> = ({ value }) => {
         </Button>
       </DrawerTrigger>
       <DrawerContent className="h-1/3">
-        <div className="mx-auto w-full py-4 pb-20 flex flex-col h-full justify-center items-center gap-4">
-          <QRCodeCanvas value={value} size={256} ref={qrRef} />
+        <div className="mx-auto w-full pt-10 pb-20 flex flex-col h-full justify-center items-center gap-4">
+          <div className="aspect-square max-h-full flex justify-center">
+            <QRCodeCanvas className="max-h-full" value={value} size={256} ref={qrRef} />
+          </div>
           <Button variant="outline" disabled={!value} onClick={downloadQRCode}>{t("downloadQRCode")}</Button>
         </div>
       </DrawerContent>

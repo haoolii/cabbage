@@ -15,6 +15,6 @@ export const useExpireTimes = () => {
     { label: t("7day"), value: 7 * 24 * 60 * 60 },
     { label: t("10day"), value: 10 * 24 * 60 * 60 },
     { label: t("30day"), value: 30 * 24 * 60 * 60 },
-    { label: t("Unlimited"), value: 0 },
+    // { label: t("Unlimited"), value: 0 },
   ];
 };

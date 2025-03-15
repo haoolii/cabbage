@@ -34,7 +34,7 @@ export const Captcha: React.FC<Props> = ({
     <>
       <Turnstile
         siteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
-        retry="never"
+        retry="auto"
         execution="render"
         refreshExpired="auto"
         sandbox={env.NODE_ENV === "development"}
