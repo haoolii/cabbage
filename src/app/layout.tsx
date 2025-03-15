@@ -38,7 +38,7 @@ export async function generateMetadata(
     openGraph: {
       title: t("title"),
       description: t("description"),
-      // images: "og.png",
+      images: "https://www.beurl.cc/og.png",
     },
     other: {
       // "google-site-verification": "iCnHzSsovYn-Tqm8zsYP257tj72IgGl_0TTCVYCjU-4",

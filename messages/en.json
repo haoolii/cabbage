@@ -8,7 +8,7 @@
   },
   "Global": {
     "title": "Beurl URL Shortener, Video Compressor, Image Compressor, Upload Images, Upload Videos, Upload Photos",
-    "description": "Beurl offers features for uploading and sharing 'compressed images,' 'compressed videos,' and 'audio files,' combined with a 'URL shortening' service. It’s a free, secure, and privacy-focused anonymous upload SPACE. With a simple interface, you can easily create short URLs, share images, videos, and audio, making social media sharing more convenient! Supports password protection for photos, videos, and images.",
+    "description": "Beurl offers 'image upload,' 'video upload,' and 'audio upload' sharing features, combined with a 'URL shortening' service, creating a free, secure, and privacy-focused anonymous upload platform. After uploading, a short URL is generated, making it easy to access the content via the short link. With simple operation, it allows you to effortlessly share images, short videos, and audio files, enhancing convenience for social sharing! It also supports password protection for photos, videos, and images.",
     "1min": "1 minute",
     "5min": "5 minutes",
     "30min": "30 minutes",
