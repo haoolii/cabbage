@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { UrlForm } from "./urlForm";
 import { UrlSuccess } from "./urlSuccess";
+import { scrollTop } from "@/lib/scroll";
 
 type Props = {};
 
@@ -15,10 +16,7 @@ export const UrlProcess: React.FC<Props> = () => {
         <UrlForm
           onSuccess={(uniqueId) => {
             setUniqueId(uniqueId);
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth", // 平滑滾動
-            });
+            scrollTop();
           }}
         />
       ) : (
@@ -26,10 +24,7 @@ export const UrlProcess: React.FC<Props> = () => {
           uniqueId={uniqueId}
           onReset={() => {
             setUniqueId("");
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth", // 平滑滾動
-            });
+             scrollTop();
           }}
         />
       )}

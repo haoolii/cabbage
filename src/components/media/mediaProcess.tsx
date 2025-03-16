@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MediaSuccess } from "./mediaSuccess";
 import { MediaForm } from "./mediaForm";
 import { FileWrapper } from "@/types";
+import { scrollTop } from "@/lib/scroll";
 
 export const MediaProcess: React.FC = () => {
   const [files, setFiles] = useState<FileWrapper[]>([]);
@@ -16,10 +17,7 @@ export const MediaProcess: React.FC = () => {
           onSuccess={(files, uniqueId) => {
             setFiles(files);
             setUniqueId(uniqueId);
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth", // 平滑滾動
-            });
+            scrollTop();
           }}
         />
       ) : (
@@ -29,10 +27,7 @@ export const MediaProcess: React.FC = () => {
           onReset={() => {
             setFiles([]);
             setUniqueId("");
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth", // 平滑滾動
-            });
+            scrollTop();
           }}
         />
       )}

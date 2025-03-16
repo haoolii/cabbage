@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ImageSuccess } from "./imageSuccess";
 import { ImageForm } from "./imageForm";
 import { FileWrapper } from "@/types";
+import { scrollTop } from "@/lib/scroll";
 
 export const ImageProcess: React.FC = () => {
   const [files, setFiles] = useState<FileWrapper[]>([]);
@@ -17,10 +18,7 @@ export const ImageProcess: React.FC = () => {
           onSuccess={(files, uniqueId) => {
             setFiles(files);
             setUniqueId(uniqueId);
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth", // 平滑滾動
-            });
+            scrollTop();
           }}
         />
       ) : (
@@ -30,10 +28,7 @@ export const ImageProcess: React.FC = () => {
           onReset={() => {
             setFiles([]);
             setUniqueId("");
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth", // 平滑滾動
-            });
+            scrollTop();
           }}
         />
       )}

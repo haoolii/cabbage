@@ -11,6 +11,7 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import Language from "./language";
+import { scrollTop } from "@/lib/scroll";
 
 export const Nav = () => {
   const [open, setOpen] = useState(false);
@@ -70,14 +71,12 @@ export const Nav = () => {
                   if (href === window.location.pathname) {
                     // If the URL is the same, close, wait a little, and scroll to top smoothly
                     setOpen(false);
-                    setTimeout(() => {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }, 500);
+                    scrollTop();
                   } else {
                     // Otherwise, wait for the URL change before closing and scroll up instantly
                     onUrlChange(() => {
                       ReactDOM.flushSync(() => setOpen(false));
-                      window.scrollTo({ top: 0, behavior: "instant" });
+                      scrollTop();
                     });
                   }
                 }}
