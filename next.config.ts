@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: "standalone",
   env: {
     CLIENT_API_BASE: process.env.CLIENT_API_BASE,
     ASSET_BASE: process.env.ASSET_BASE,
