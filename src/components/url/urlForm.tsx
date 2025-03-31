@@ -83,18 +83,21 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
             );
           }}
         ></FormField>
-        <FormField
-          control={form.control}
-          name="captchToken"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Captcha onVerify={field.onChange} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {
+          !form.formState.isSubmitting && <FormField
+            control={form.control}
+            name="captchToken"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Captcha onVerify={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        }
+
         <Button
           disabled={form.formState.isSubmitting}
           key={"submit"}

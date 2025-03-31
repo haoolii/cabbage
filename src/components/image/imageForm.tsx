@@ -59,7 +59,7 @@ type Props = {
 
 const allowedFileTypes = [".jpg", ".jpeg", ".png", ".gif"];
 
-export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
+export const ImageForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
   const t = useTranslations("ImagePage");
   const expireTimes = useExpireTimes();
   const { toast } = useToast();
@@ -210,11 +210,10 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                   )}
 
                   <div
-                    className={`grid ${
-                      files.length > 1
+                    className={`grid ${files.length > 1
                         ? "grid-cols-1 sm:grid-cols-1"
                         : "grid-cols-1"
-                    } gap-8`}
+                      } gap-8`}
                   >
                     {files.map((file) => (
                       <div
@@ -349,18 +348,20 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="captchToken"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Captcha onVerify={field.onChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {
+                !form.formState.isSubmitting && <FormField
+                  control={form.control}
+                  name="captchToken"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Captcha onVerify={field.onChange} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              }
 
               <Button
                 disabled={form.formState.isSubmitting}
