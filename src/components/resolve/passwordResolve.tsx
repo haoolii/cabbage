@@ -7,7 +7,6 @@ import { Button } from "../ui/button";
 import { Record } from "@/request/types";
 import { isSuccess } from "@/request/util";
 import { useErrorCodeToast } from "@/hooks/useErrorToast";
-import { Captcha } from "../captcha";
 import {
   Form,
   FormControl,
@@ -22,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useHistoriesPassword } from "@/hooks/useHistoriesPassword";
 import dayjs from "dayjs";
+import { useCaptcha } from "@/hooks/useCaptcha";
 type Props = {
   uniqueId: string;
   record: Record;
@@ -31,6 +31,7 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
   const { get, set } = useHistoriesPassword();
   const t = useTranslations("PasswordResolvePage");
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const { reset, Captcha } = useCaptcha()
   const formSchema = z.object({
     password: z.string().nonempty(t("form.captchaToken.errors.required")),
     captchToken: z.string().nonempty(t("form.captchaToken.errors.required")),
@@ -58,8 +59,10 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
         return;
       }
       errorCodeToast(json.code);
+      reset();
     } catch (err) {
       setIsRedirecting(false);
+      reset();
     }
   };
 
@@ -119,8 +122,7 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
               );
             }}
           />
-          {
-            !form.formState.isSubmitting && <FormField
+          <FormField
               control={form.control}
               name="captchToken"
               render={({ field }) => (
@@ -132,7 +134,6 @@ export const PasswordResolve: React.FC<Props> = ({ uniqueId, record }) => {
                 </FormItem>
               )}
             />
-          }
 
           <Button
             disabled={form.formState.isSubmitting || isRedirecting}

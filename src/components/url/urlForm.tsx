@@ -6,7 +6,6 @@ import { postRecordUrl } from "@/request/requests";
 import { useTranslations } from "next-intl";
 import { isSuccess } from "@/request/util";
 import { useErrorCodeToast } from "@/hooks/useErrorToast";
-import { Captcha } from "../captcha";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import {
@@ -19,6 +18,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { Code } from "@/request/code";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 type Props = {
   onSuccess: (uniqueId: string) => void;
@@ -28,6 +28,8 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
   const { errorCodeToast } = useErrorCodeToast();
   const t = useTranslations("UrlPage");
   const { toast } = useToast();
+  const { reset, Captcha } = useCaptcha()
+
   const formSchema = z.object({
     content: z.string().nonempty(t("form.content.errors.required")),
     captchToken: z.string().nonempty(t("form.captchaToken.errors.required")),
@@ -52,14 +54,18 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
         onSuccess(postRecordJson.data.uniqueId);
       } else {
         errorCodeToast(postRecordJson.code);
+        reset();
       }
     } catch (err) {
       errorCodeToast(Code.ERROR);
+      reset();
     }
   }
+  
 
   return (
     <Form {...form}>
+    
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
         <FormField
           control={form.control}
@@ -83,8 +89,8 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
             );
           }}
         ></FormField>
-        {
-          !form.formState.isSubmitting && <FormField
+
+         <FormField
             control={form.control}
             name="captchToken"
             render={({ field }) => (
@@ -96,7 +102,6 @@ export const UrlForm: React.FC<Props> = ({ onSuccess }) => {
               </FormItem>
             )}
           />
-        }
 
         <Button
           disabled={form.formState.isSubmitting}

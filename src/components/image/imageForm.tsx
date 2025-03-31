@@ -24,7 +24,6 @@ import { Input } from "../ui/input";
 import { UploadButton } from "../uploadButton";
 import { ImageControl } from "../ImageControl";
 import { Switch } from "../ui/switch";
-import { Captcha } from "../captcha";
 import {
   Select,
   SelectContent,
@@ -52,6 +51,7 @@ import { isSuccess } from "@/request/util";
 import { sumFileBytesSize } from "@/lib/utils";
 import { useErrorCodeToast } from "@/hooks/useErrorToast";
 import { Code } from "@/request/code";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 type Props = {
   onSuccess?: (files: FileWrapper[], uniqueId: string) => void;
@@ -64,7 +64,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
   const expireTimes = useExpireTimes();
   const { toast } = useToast();
   const { errorCodeToast } = useErrorCodeToast();
-
+  const { reset, Captcha } = useCaptcha()
   const formSchema = z
     .object({
       files: z
@@ -133,9 +133,11 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
         onSuccess(values.files, postRecordJson.data.uniqueId);
       } else {
         errorCodeToast(postRecordJson.code);
+        reset();
       }
     } catch {
       errorCodeToast(Code.ERROR);
+      reset();
     }
   }
 
@@ -348,8 +350,7 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
                 )}
               />
 
-              {
-                !form.formState.isSubmitting && <FormField
+              <FormField
                   control={form.control}
                   name="captchToken"
                   render={({ field }) => (
@@ -361,7 +362,6 @@ export const ImageForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
                     </FormItem>
                   )}
                 />
-              }
 
               <Button
                 disabled={form.formState.isSubmitting}

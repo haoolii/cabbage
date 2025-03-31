@@ -21,7 +21,6 @@ import {
 import { Input } from "../ui/input";
 import { UploadButton } from "../uploadButton";
 import { Switch } from "../ui/switch";
-import { Captcha } from "../captcha";
 import {
   Select,
   SelectContent,
@@ -50,6 +49,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
 import { useErrorCodeToast } from "@/hooks/useErrorToast";
 import { Code } from "@/request/code";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 type Props = {
   onSuccess?: (files: FileWrapper[], uniqueId: string) => void;
@@ -62,6 +62,7 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
   const expireTimes = useExpireTimes();
   const { errorCodeToast } = useErrorCodeToast();
   const { toast } = useToast();
+  const { reset, Captcha } = useCaptcha()
 
   const formSchema = z
     .object({
@@ -131,9 +132,11 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
         onSuccess(values.files, postRecordJson.data.uniqueId);
       } else {
         errorCodeToast(postRecordJson.code);
+        reset();
       }
     } catch {
       errorCodeToast(Code.ERROR);
+      reset();
     }
   }
 
@@ -207,8 +210,8 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
                   )}
                   <div
                     className={`grid ${files.length > 1
-                        ? "grid-cols-1 sm:grid-cols-1"
-                        : "grid-cols-1"
+                      ? "grid-cols-1 sm:grid-cols-1"
+                      : "grid-cols-1"
                       } gap-8`}
                   >
                     {files.map((file) => (
@@ -344,20 +347,18 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
                 )}
               />
 
-              {
-                !form.formState.isSubmitting && <FormField
-                  control={form.control}
-                  name="captchToken"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Captcha onVerify={field.onChange} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              }
+              <FormField
+                control={form.control}
+                name="captchToken"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Captcha onVerify={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <Button
                 disabled={form.formState.isSubmitting}

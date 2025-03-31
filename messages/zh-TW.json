@@ -188,6 +188,11 @@
           "required": "請輸入密碼"
         }
       },
+      "captchaToken": {
+        "errors": {
+          "required": "請通過驗證"
+        }
+      },
       "submit": "送出",
       "submitting": "送出中..."
     },
