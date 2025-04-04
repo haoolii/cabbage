@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,10 +32,13 @@ import {
 import { Button } from "../ui/button";
 
 // hooks
+import { useErrorCodeToast } from "@/hooks/useErrorToast";
 import { useExpireTimes } from "@/hooks/useExpireTimes";
+import { useCaptcha } from "@/hooks/useCaptcha";
+import { useToast } from "@/hooks/use-toast";
 
 // requests
-import { postRecordMedia } from "@/request/requests";
+import { postRecordMedia, postRecordMediaV2 } from "@/request/requests";
 
 // utils
 import { isSuccess } from "@/request/util";
@@ -45,11 +49,7 @@ import {
   MAX_MEDIA_FILE_UPLOAD_LENGTH,
 } from "@/lib/constants";
 import { sumFileBytesSize } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { useEffect } from "react";
-import { useErrorCodeToast } from "@/hooks/useErrorToast";
 import { Code } from "@/request/code";
-import { useCaptcha } from "@/hooks/useCaptcha";
 
 type Props = {
   onSuccess?: (files: FileWrapper[], uniqueId: string) => void;
@@ -57,12 +57,14 @@ type Props = {
 
 const allowedFileTypes = [".mp3", ".mp4"];
 
-export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
+export const MediaForm: React.FC<Props> = ({ onSuccess = () => {} }) => {
   const t = useTranslations("MediaPage");
   const expireTimes = useExpireTimes();
   const { errorCodeToast } = useErrorCodeToast();
   const { toast } = useToast();
-  const { reset, Captcha } = useCaptcha()
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [serverPercentage, setServerPercentage] = useState(0);
+  const { reset, Captcha } = useCaptcha();
 
   const formSchema = z
     .object({
@@ -119,22 +121,38 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const postRecordJson = await postRecordMedia({
-        prompt: values.prompt,
-        passwordRequired: values.passwordRequired,
-        password: values.passwordRequired ? values.password : "",
-        expireIn: +values.expireIn,
-        files: values.files.map((f) => f.file),
-        captchaToken: values.captchToken,
-      });
-
-      if (isSuccess(postRecordJson)) {
-        onSuccess(values.files, postRecordJson.data.uniqueId);
-      } else {
-        errorCodeToast(postRecordJson.code);
-        reset();
-      }
+      setUploadPercentage(0);
+      setServerPercentage(0);
+      await postRecordMediaV2(
+        {
+          prompt: values.prompt,
+          passwordRequired: values.passwordRequired,
+          password: values.passwordRequired ? values.password : "",
+          expireIn: +values.expireIn,
+          files: values.files.map((f) => f.file),
+          captchaToken: values.captchToken,
+        },
+        (data) => {
+          if (!data.isEnd) {
+            // keep
+            setServerPercentage(data.payload.percentage);
+          } else {
+            // isEnd
+            if (isSuccess(data.payload)) {
+              onSuccess(values.files, data.payload.data.uniqueId);
+            } else {
+              errorCodeToast(data.payload.code);
+              reset();
+            }
+          }
+        },
+        (percentage) => {
+          setUploadPercentage(percentage);
+        }
+      );
     } catch {
+      setUploadPercentage(0);
+      setServerPercentage(0);
       errorCodeToast(Code.ERROR);
       reset();
     }
@@ -143,6 +161,10 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
   const files = form.watch("files");
 
   const passwordRequired = form.getValues("passwordRequired");
+
+  const progressPercentage = useMemo(() => {
+    return (uploadPercentage + serverPercentage) / 2;
+  }, [uploadPercentage, serverPercentage])
 
   useEffect(() => {
     if (!passwordRequired) {
@@ -209,10 +231,11 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
                     </FormItem>
                   )}
                   <div
-                    className={`grid ${files.length > 1
-                      ? "grid-cols-1 sm:grid-cols-1"
-                      : "grid-cols-1"
-                      } gap-8`}
+                    className={`grid ${
+                      files.length > 1
+                        ? "grid-cols-1 sm:grid-cols-1"
+                        : "grid-cols-1"
+                    } gap-8`}
                   >
                     {files.map((file) => (
                       <div
@@ -364,11 +387,20 @@ export const MediaForm: React.FC<Props> = ({ onSuccess = () => { } }) => {
                 disabled={form.formState.isSubmitting}
                 key={"submit"}
                 type="submit"
-                className="w-full"
+                className="w-full relative overflow-hidden"
               >
-                {form.formState.isSubmitting
-                  ? t("form.submitting")
-                  : t("form.submit")}
+                <div
+                  className={`bg-white bg-opacity-50 absolute left-0 top-0 h-full transition-all duration-300`}
+                  style={{ width: `${progressPercentage * 100}%` }}
+                ></div>
+                <span>
+                  {form.formState.isSubmitting
+                    ? `${t("form.submitting")} ${(
+                        progressPercentage * 100
+                      ).toFixed(2)}%`
+                    : t("form.submit")}
+                  {}
+                </span>
               </Button>
             </div>
           </div>

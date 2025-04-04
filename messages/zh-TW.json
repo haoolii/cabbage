@@ -36,7 +36,8 @@
     "shortenUrlActionLink": "我要縮網址",
     "shortenImageActionLink": "我要縮圖片或照片",
     "shortenMediaActionLink": "我要縮影片或音訊檔",
-    "downloadQRCode": "下載 QRCode"
+    "downloadQRCode": "下載 QRCode",
+    "uploading": "上傳中"
   },
   "Header": {
     "links": {

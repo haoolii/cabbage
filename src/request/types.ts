@@ -40,6 +40,18 @@ export type GetRecordCountApiResponse = ApiResponse<{
   count: number;
 }>;
 
+export type PostMediaRecordV2SSEResponse =
+  | {
+      isEnd: true;
+      payload: PostRecordMediaResponse;
+    }
+  | {
+      isEnd: false;
+      payload: {
+        percentage: number;
+      };
+    };
+
 export type PostMediaRecordBody = {
   prompt?: string;
   password?: string;
